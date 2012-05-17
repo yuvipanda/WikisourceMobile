@@ -25,9 +25,9 @@ window.search = function() {
 		chrome.showSpinner();
 
 		if(!isSuggestion) {
-			getFullTextSearchResults(term);
+			return getFullTextSearchResults(term);
 		} else {
-			getSearchResults(term);
+			return getSearchResults(term);
 		}
 	}
 
@@ -74,6 +74,7 @@ window.search = function() {
 			}
 			renderResults([term, searchResults], false);
 		}).fail(handleNetworkFailure);
+		return curReq;
 	}
 
 	function getSearchResults(term, didyoumean) {
@@ -92,6 +93,7 @@ window.search = function() {
 				renderResults(results, didyoumean);
 			}
 		}).fail(handleNetworkFailure);
+		return curReq;
 	}
 
 	function onSearchResultClicked() {

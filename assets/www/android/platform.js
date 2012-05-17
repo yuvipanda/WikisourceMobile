@@ -90,20 +90,35 @@ chrome.addPlatformInitializer(function() {
 	// For first time loading
 	var origLoadFirstPage = chrome.loadFirstPage;
 	chrome.loadFirstPage = function() {
+		var d = $.Deferred();
 		plugins.webintent.getIntentData(function(args) {
 			if(args.action == "android.intent.action.VIEW" && args.uri) {
-				app.navigateToPage(args.uri);
+				app.navigateToPage(args.uri).done(function() {
+					d.resolve.apply(arguments);
+				}).fail(function() {
+					d.reject.apply(arguments);
+				});
 			} else if(args.action == "android.intent.action.SEARCH") {
 				plugins.webintent.getExtra("query", 
 					function(query) {
-						search.performSearch(query, false);
+						search.performSearch(query, false).done(function() {
+							d.resolve.apply(arguments);
+						}).fail(function() {
+							d.reject.apply(arguments);
+						});
 					}, function(err) {
 						console.log("Error in search!");
+						d.reject();
 					});
 			} else {
-				origLoadFirstPage();
+				origLoadFirstPage().done(function() {
+					d.resolve.apply(arguments);
+				}).fail(function() {
+					d.reject.apply(arguments);
+				});
 			}
 		});
+		return d;
 	};
 
 	// Used only if we switch to singleTask

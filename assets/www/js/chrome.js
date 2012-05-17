@@ -144,8 +144,9 @@ window.chrome = function() {
 			app.setFontSize(preferencesDB.get('fontSize'));
 			chrome.initContentLinkHandlers("#main");
 			savedPages.doMigration().done(function() {
-				$("#migrating-saved-pages-overlay").hide();
-				chrome.loadFirstPage();
+				chrome.loadFirstPage().done(function() {
+					$("#migrating-saved-pages-overlay").hide();
+				});
 				chrome.setupFastClick(".titlebar");
 			});
 		});
@@ -158,7 +159,7 @@ window.chrome = function() {
 	}
 
 	function loadFirstPage() {
-		app.loadMainPage();
+		return app.loadMainPage();
 	}
 
 	function isTwoColumnView() {
