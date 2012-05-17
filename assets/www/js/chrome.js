@@ -143,8 +143,11 @@ window.chrome = function() {
 
 			app.setFontSize(preferencesDB.get('fontSize'));
 			chrome.initContentLinkHandlers("#main");
-			chrome.loadFirstPage();
-			chrome.setupFastClick(".titlebar");
+			savedPages.doMigration().done(function() {
+				$("#migrating-saved-pages-overlay").hide();
+				chrome.loadFirstPage();
+				chrome.setupFastClick(".titlebar");
+			});
 		});
 
 	}

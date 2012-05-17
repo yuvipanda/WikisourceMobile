@@ -736,3 +736,28 @@ the scrollable divs seem to be giving us lots of bugs
 .mw-cite-backlink {
 	display: none;
 }
+
+.full-modal-overlay {
+	z-index: 999;
+	position:absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	background-color: White;
+}
+
+#migrating-saved-pages-overlay {
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	box-orient: vertical;
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	box-pack: center;
+	text-align: center;
+
+	font-size: 18px;
+}

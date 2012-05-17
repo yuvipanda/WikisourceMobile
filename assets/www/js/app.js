@@ -29,6 +29,7 @@ window.app = function() {
 				d.reject(err);
 			});
 		});
+		return d;
 	}
 
 	function loadCachedPage (url, title, lang) {
