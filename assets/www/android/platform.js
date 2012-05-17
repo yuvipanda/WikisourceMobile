@@ -186,7 +186,7 @@ window.preferencesDB.addOnSet(function(id, value) {
 	window.plugins.preferences.set(id, value, function(){}, function(){});
 });
 
-savedPages.doSave = function() {
+savedPages.doSave = function(options) {
 	console.log("Saving page");
 	chrome.showSpinner();
 	var page = app.curPage;
@@ -205,7 +205,9 @@ savedPages.doSave = function() {
 			);
 		});
 		app.track('mobile.app.wikipedia.save-page');
-		chrome.showNotification(mw.message('page-saved', app.curPage.title).plain());
+		if(!options.silent) {
+			chrome.showNotification(mw.message('page-saved', app.curPage.title).plain());
+		}
 		chrome.hideSpinner();
 		d.resolve();
 	}

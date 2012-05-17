@@ -3,7 +3,9 @@ window.savedPages = function() {
 	// Increment when format of saved pages changes
 	window.SAVED_PAGES_VERSION = 1;
 
-	function doSave() {
+	// Options:
+	//		silent: set to true to prevent notification of successful saving
+	function doSave(options) {
 		// Overriden in appropriate platform files
 	}
 
@@ -29,7 +31,7 @@ window.savedPages = function() {
 						function saveNextPage(curPage) {
 							$("#migration-status").html(mw.msg('migrating-saved-page-status', pages[curPage].title));
 							app.navigateToPage(pages[curPage].key).done(function() {
-								savedPages.saveCurrentPage().done(function() {
+								savedPages.saveCurrentPage({silent: true}).done(function() {
 									savedPagesDB.remove(pages[curPage].key);
 									// curPage + 1 < pages.length
 									// since curpage + 1 is what we pass to the next call
@@ -52,9 +54,11 @@ window.savedPages = function() {
 		return d;
 	}
 
-	function saveCurrentPage() {
+	function saveCurrentPage(options) {
 		var d = $.Deferred();
 		var MAX_LIMIT = 50;
+
+		options = $.extend({silent: false}, options);
 
 		var title = app.getCurrentTitle();
 		var url = app.getCurrentUrl();
@@ -69,7 +73,7 @@ window.savedPages = function() {
 						alert(mw.message("saved-pages-max-warning").plain());
 					}else{
 						savedPagesDB.save({key: app.curPage.getAPIUrl(), title: title, lang: app.curPage.lang, version: SAVED_PAGES_VERSION});
-						savedPages.doSave(app.curPage.getAPIUrl(), title).done(function() {
+						savedPages.doSave(options).done(function() {
 							d.resolve()
 						}).fail(function() {
 							d.reject();
