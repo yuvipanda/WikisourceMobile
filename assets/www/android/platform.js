@@ -216,6 +216,7 @@ savedPages.doSave = function(options) {
 				},
 				function() {
 					console.log("Error in image saving");
+					d.reject();
 				}
 			);
 		});
@@ -229,6 +230,7 @@ savedPages.doSave = function(options) {
 	var gotError = function(uri, error) {
 		console.log('Error: ' + JSON.stringify(error));
 		chrome.hideSpinner();
+		d.reject();
 	}
 	$.each(app.curPage.sections, function(i, section) {
 		chrome.populateSection(section.id);

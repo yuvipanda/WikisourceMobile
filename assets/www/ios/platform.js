@@ -40,13 +40,15 @@ savedPages.doSave = function(options) {
 	$.each(app.curPage.sections, function(i, section) {
 		chrome.populateSection(section.id);
 	});
-	urlCache.saveCompleteHtml(url, data, $("#main")).then(function() {
+	urlCache.saveCompleteHtml(url, data, $("#main")).done(function() {
 		if(!options.silent) {
 			chrome.showNotification(mw.message('page-saved', app.curPage.title).plain());
 		}
 		app.track('mobile.app.wikipedia.save-page');
 		chrome.hideSpinner();
 		d.resolve();
+	}).fail(function() {
+		d.reject()
 	});
 	return d;
 }

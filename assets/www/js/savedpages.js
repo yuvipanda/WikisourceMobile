@@ -40,7 +40,11 @@ window.savedPages = function() {
 									} else {
 										d.resolve();
 									}
+								}).fail(function() {
+									d.reject();
 								});
+							}).fail(function() {
+								d.reject();
 							});
 						}
 						saveNextPage(0);

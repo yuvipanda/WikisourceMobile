@@ -147,7 +147,11 @@ window.chrome = function() {
 				chrome.loadFirstPage().done(function() {
 					$("#migrating-saved-pages-overlay").hide();
 				});
-				chrome.setupFastClick(".titlebar");
+			}).fail(function() {
+				navigator.notification.alert(mw.msg('migrating-saved-pages-failed'), function() {
+					$("#migrating-saved-pages-overlay").hide();
+				});
+				chrome.loadFirstPage();
 			});
 		});
 
