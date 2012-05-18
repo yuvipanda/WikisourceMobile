@@ -95,6 +95,10 @@ window.savedPages = function() {
 		var url = parent.data("page-url");
 		var lang = parent.data("page-lang");
 		var title = parent.data("page-title");
+		var disabled = parent.data("page-disabled");
+		if(disabled) {
+			return false;
+		}
 		chrome.showContent();
 		app.loadCachedPage(url, title, lang);
 	}
@@ -136,6 +140,11 @@ window.savedPages = function() {
 		var template = templates.getTemplate('saved-pages-template');
 		var savedPagesDB = new Lawnchair({name:"savedPagesDB"}, function() {
 			this.all(function(savedpages) {	
+				$.each(savedpages, function(i, page) {
+					if(page.version !== SAVED_PAGES_VERSION) {
+						page.disabled = true;
+					}
+				});
 				$('#savedPagesList').html(template.render({'pages': savedpages}));
 				$(".savedPage").click(onSavedPageClick);
 				$("#savedPages .cleanButton").unbind('click', onClearSavedPages).bind('click', onClearSavedPages);
