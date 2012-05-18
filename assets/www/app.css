@@ -698,7 +698,7 @@ body[dir=rtl] #settingsList .item select {
 	}
 }
 
-.disabled {
+.iOS #menu .disabled {
 	opacity: 0.1;
 }
 
