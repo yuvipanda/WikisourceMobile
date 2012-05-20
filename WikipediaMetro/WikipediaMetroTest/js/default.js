@@ -666,7 +666,7 @@
             if ($table.hasClass('infobox')) {
                 txt = mediaWiki.message('table-show-infobox').plain();
             } else if ($table.hasClass('metadata')) {
-                txt = mediaWiki.message('table-show-metadata').plain();
+                txt = mediaWiki.message('table-show-meta').plain();
             } else {
                 txt = mediaWiki.message('table-show').plain();
             }
