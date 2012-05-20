@@ -20,16 +20,6 @@
             index: 0
         });
     };
-    // Spacer element
-    HubContents.itemList.push({
-        title: '',
-        snippet: '',
-        heading: '',
-        image: '',
-        group: ' ',
-        groupText: ' ',
-        style: 'spacer-item'
-    });
 
     // State stack!
     var state = {
@@ -754,9 +744,9 @@
     function initHub(lang) {
         doShowHub(lang);
 
-        // Empty any old contents? except spacer
+        // Empty any old contents
         var list = HubContents.itemList;
-        list.splice(1, list.length - 1);
+        list.splice(0, list.length);
 
         var pings = 4, nItems = 0;
         var completeAnother = function () {
@@ -913,6 +903,22 @@
 
     function sizeContent() {
         var $work, fudge;
+
+        // Hack to swap orientation in snapped mode
+        if (window.innerWidth <= 320) {
+            // Snapped
+            $('#toc')[0].winControl.layout = new WinJS.UI.ListLayout();
+            $('#hub-list')[0].winControl.layout = new WinJS.UI.ListLayout({
+                groupInfo: groupInfo
+            });
+        } else {
+            // Not snapped
+            $('#toc')[0].winControl.layout = new WinJS.UI.GridLayout();
+            $('#hub-list')[0].winControl.layout = new WinJS.UI.GridLayout({
+                groupInfo: groupInfo
+            });
+        }
+
         if ($('#hub').is(':visible')) {
             $work = $('#hub-list');
             fudge = 0;

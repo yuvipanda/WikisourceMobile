@@ -170,9 +170,6 @@
     display: none;
 }
 
-#toc {
-    padding-left: 120px;
-}
 .tocItemTemplate {
     width: 310px;
     height: 30px;
@@ -300,6 +297,10 @@ button.show-table {
     height: 200px;
 }
 
+.win-listview .win-viewport.win-horizontal {
+    padding-left: 120px;
+}
+
 @media all and (min-width: 321px) {
     /* Fullscreen or most of screen */
     #content {
@@ -324,8 +325,9 @@ button.show-table {
     /* Snapped */
     #content {
         padding:  10px;
-        overflow-x: visible;
-        overflow-y: scroll;
+        width: 300px !important;
+        overflow-x: visible !important; /* override the scroller */
+        overflow-y: scroll !important;
     }
     .lightbox-fg {
         left: 10px;
