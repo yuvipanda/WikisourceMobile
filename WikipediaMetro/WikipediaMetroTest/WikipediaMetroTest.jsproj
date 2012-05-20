@@ -44,8 +44,9 @@
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <TargetPlatformVersion>8.0</TargetPlatformVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <PackageCertificateKeyFile>WikipediaMetroTest_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>WikipediaMetroTest_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <PackageCertificateThumbprint>EA9AA557F872C6D4818F71C5139A7B3050902EC7</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">
@@ -441,6 +442,8 @@
     <Content Include="css\default.css" />
     <Content Include="js\jquery-1.7.2.js" />
     <Content Include="js\wikiview.js" />
+    <None Include="Package.StoreAssociation.xml" />
+    <None Include="WikipediaMetroTest_StoreKey.pfx" />
     <Content Include="win8-tile-small.png" />
     <Content Include="win8-tile.png" />
     <Content Include="win8-wide-tile.png" />
