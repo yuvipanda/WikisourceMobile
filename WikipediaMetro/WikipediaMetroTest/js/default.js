@@ -27,6 +27,7 @@
         heading: '',
         image: '',
         group: ' ',
+        groupText: ' ',
         style: 'spacer-item'
     });
 
@@ -66,7 +67,7 @@
         // Function which returns the data for a group
         function getGroupData(dataItem) {
             return {
-                title: dataItem.group
+                title: dataItem.groupText
             };
         }
     })();
@@ -84,8 +85,25 @@
         return 'Wikipedia.' + lang + '.' + md5(title.replace(/_/g, ' '));
     }
 
+    window.preferencesDB = {
+        get: function (key) {
+            return 'en';
+        }
+    }
+    window.ROOT_URL = '';
+
     $(function () {
-        WinJS.UI.processAll().then(function () {
+        $(document).bind('mw-messages-ready', function () {
+            WinJS.UI.processAll().then(doStuff);
+        });
+        l10n.initLanguages();
+
+        function doStuff() {
+            $('#readInCmd')[0].winControl.label = mediaWiki.message('menu-language').plain();
+            $('#pinCmd')[0].winControl.label = mediaWiki.message('menu-win8-pin').plain();
+            $('#unpinCmd')[0].winControl.label = mediaWiki.message('menu-win8-unpin').plain();
+            $('#browserCmd')[0].winControl.label = mediaWiki.message('menu-open-browser').plain();
+
             initHub('en');
             // Handler for links!
             $(document).on('click', 'a', function (event) {
@@ -241,7 +259,7 @@
                     menu.show();
                 });
             });
-        });
+        };
     });
 
     function getLanguageLinks(lang, title) {
@@ -646,11 +664,11 @@
             }
             var txt;
             if ($table.hasClass('infobox')) {
-                txt = 'Show infobox';
+                txt = mediaWiki.message('table-show-infobox').plain();
             } else if ($table.hasClass('metadata')) {
-                txt = 'Show metadata';
+                txt = mediaWiki.message('table-show-metadata').plain();
             } else {
-                txt = 'Show table';
+                txt = mediaWiki.message('table-show').plain();
             }
             var $placeholder = $('<button>')
                 .addClass('show-table')
@@ -679,7 +697,7 @@
             lang: lang,
             title: ''
         });
-        $('#title').text('Wikipedia');
+        $('#title').text(mediaWiki.message('sitename').plain());
         $('#search').hide();
         $('#reader').hide();
         $('#back').hide();
@@ -755,6 +773,7 @@
                             snippet: '',
                             image: '/images/secondary-tile.png',
                             group: 'Main Page',
+                            groupText: mediaWiki.messages('section-mainpage').plain(),
                             style: 'featured-item'
                         });
                     });
@@ -767,7 +786,7 @@
             var html;
             if (htmlList.length) {
                 var txt = stripHtmlTags(htmlList[0]);
-                updateLiveTile("Featured Article", txt);
+                updateLiveTile(mediaWiki.message('win8-tile-featured-article').plain(), txt);
             }
             htmlList.slice(0, 8).forEach(function (html, index) {
                 var $html = $('<div>').html(html),
@@ -799,6 +818,7 @@
                     snippet: stripHtmlTags(html).substr(0, 100) + '...',
                     image: image,
                     group: 'Featured articles',
+                    groupText: mediaWiki.message('section-featured-articles').plain(),
                     style: (index < 1) ? 'featured-item large' : 'featured-item'
                 });
             });
@@ -836,6 +856,7 @@
                     image: image,
                     imageid: imageid,
                     group: 'Featured pictures',
+                    groupText: mediaWiki.message('section-featured-pictures').plain(),
                     style: (index == 0) ? 'photo-item large' : 'photo-item'
                 });
 
@@ -865,6 +886,7 @@
                     snippet: detail,
                     image: '',
                     group: 'On this day',
+                    groupText: mediaWiki.message('section-onthisday').plain(),
                     style: 'onthisday-item'
                 });
             });
@@ -880,6 +902,7 @@
                         snippet: '',
                         image: '/images/secondary-tile.png',
                         group: 'Recent changes',
+                        groupText: mediaWiki.message('section-recentchanges').plain(),
                         style: 'featured-item'
                     });
                 }
@@ -986,7 +1009,7 @@
                 target = item.title,
                 label;
             if (item.type == 'hub') {
-                label = 'Home (' + item.lang + ')';
+                label = mediaWiki.message('sitename').plain() + ' (' + item.lang + ')';
             } else if (item.type == 'search') {
                 label = item.search + ' (' + item.lang + ')';
             } else {
