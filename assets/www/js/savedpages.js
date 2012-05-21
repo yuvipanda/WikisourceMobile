@@ -22,7 +22,10 @@ window.savedPages = function() {
 				$.each(savedpages, function(i, page) {
 					if(typeof page.version === "undefined") {
 						// 1.1 -> 1.2
-						toMigrate['1.1->1.2'].push(page);
+						if(typeof page.lang === "undefined") {
+							// Don't upgrade saved pages from v1.2 beta cycle. They work fine
+							toMigrate['1.1->1.2'].push(page);
+						}
 					}
 				});
 				$.each(toMigrate, function(migration, pages) {
@@ -141,7 +144,8 @@ window.savedPages = function() {
 		var savedPagesDB = new Lawnchair({name:"savedPagesDB"}, function() {
 			this.all(function(savedpages) {	
 				$.each(savedpages, function(i, page) {
-					if(page.version !== SAVED_PAGES_VERSION) {
+					// Definitive test for <1.1. 1.2betas will pass it if it is just the first condition
+					if(page.version !== SAVED_PAGES_VERSION && typeof page.lang === "undefined") {
 						page.disabled = true;
 					}
 				});
