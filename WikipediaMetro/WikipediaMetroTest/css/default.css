@@ -46,7 +46,7 @@
     overflow: hidden;
     background: #eef;
 }
-.photo-item.large {
+.win-listview .win-viewport.win-horizontal .photo-item.large {
     width: 590px;
     height: 350px;
 }

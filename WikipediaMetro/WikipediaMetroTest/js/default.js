@@ -43,7 +43,7 @@
         // Note: This is similar to default sorting behavior 
         //   when using WinJS.Binding.List.createGrouped()
         function compareGroups(left, right) {
-            var sort = ['Featured pictures', 'Featured articles', 'On this day', 'Recent changes'];
+            var sort = ['Featured pictures', 'Featured articles', 'On this day', 'Recent changes', 'Spacer'];
             var n = sort.indexOf(left),
                 n2 = sort.indexOf(right);
             return n - n2;
@@ -753,6 +753,15 @@
             pings--;
             if (pings == 0) {
                 $('#spinner').hide();
+                list.push({
+                    title: '',
+                    heading: '',
+                    snippet: '',
+                    image: '#',
+                    group: 'Spacer',
+                    groupText: ' ',
+                    style: 'spacer-item'
+                });
                 if (nItems == 0) {
                     // No featured feeds for this wiki
                     //doLoadPage(lang, 'Main Page');
