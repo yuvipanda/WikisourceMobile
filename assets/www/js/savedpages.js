@@ -30,27 +30,39 @@ window.savedPages = function() {
 				});
 				$.each(toMigrate, function(migration, pages) {
 					if(migration === "1.1->1.2" && pages.length !== 0) {
-						$("#migrating-saved-pages-overlay").show();
-						function saveNextPage(curPage) {
-							$("#migration-status").html(mw.msg('migrating-saved-page-status', pages[curPage].title));
-							app.navigateToPage(pages[curPage].key).done(function() {
-								savedPages.saveCurrentPage({silent: true}).done(function() {
-									savedPagesDB.remove(pages[curPage].key);
-									// curPage + 1 < pages.length
-									// since curpage + 1 is what we pass to the next call
-									if(curPage < pages.length - 1) {
-										saveNextPage(curPage + 1);
-									} else {
-										d.resolve();
+						navigator.notification.confirm(
+							mw.msg('migrating-saved-pages-confirm'),
+							function(index) {
+								if(index === 1) {
+									$("#migrating-saved-pages-overlay").show();
+									function saveNextPage(curPage) {
+										$("#migration-status").html(mw.msg('migrating-saved-page-status', pages[curPage].title));
+										app.navigateToPage(pages[curPage].key).done(function() {
+											savedPages.saveCurrentPage({silent: true}).done(function() {
+												savedPagesDB.remove(pages[curPage].key);
+												// curPage + 1 < pages.length
+												// since curpage + 1 is what we pass to the next call
+												if(curPage < pages.length - 1) {
+													saveNextPage(curPage + 1);
+												} else {
+													d.resolve();
+												}
+											}).fail(function() {
+												d.reject();
+											});
+										}).fail(function() {
+											d.reject();
+										});
 									}
-								}).fail(function() {
-									d.reject();
-								});
-							}).fail(function() {
-								d.reject();
-							});
-						}
-						saveNextPage(0);
+									saveNextPage(0);
+								} else {
+									navigator.notification.alert(mw.msg('migrating-saved-pages-confirm-cancel'));
+									d.resolve(); // Not failure.
+								}
+							},
+							mw.msg('migrating-saved-pages-confirm-title'),
+							mw.msg('confirm-button-yes') + ',' + mw.msg('confirm-button-not-now')
+						);
 					} else {
 						d.resolve();
 					}
