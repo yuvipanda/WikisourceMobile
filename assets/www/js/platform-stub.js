@@ -70,8 +70,7 @@ if (platform == 'unknown') {
 			'ActionSheet.js',
 			'TwitterPlugin.js',
 			'pg-plugin-fb-connect.js',
-			'facebook_js_sdk.js',
-			'ReadItLaterPlugin.js'
+			'facebook_js_sdk.js'
 		],
 	};
 	if (platform in plugins) {
