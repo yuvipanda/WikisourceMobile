@@ -301,6 +301,11 @@ button.show-table {
     padding-left: 120px;
 }
 
+#offline {
+    padding-left: 120px;
+    padding-top: 20px;
+}
+
 @media all and (min-width: 321px) {
     /* Fullscreen or most of screen */
     #content {
