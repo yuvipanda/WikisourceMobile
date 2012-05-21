@@ -297,6 +297,9 @@ button.show-table {
     height: 200px;
 }
 
+.win-listview .win-viewport.win-vertical {
+    padding-left: 10px;
+}
 .win-listview .win-viewport.win-horizontal {
     padding-left: 120px;
 }
@@ -329,8 +332,8 @@ button.show-table {
 @media all and (max-width: 320px) {
     /* Snapped */
     #content {
-        padding:  10px;
-        width: 300px !important;
+        padding: 10px 20px;
+        width: 280px !important;
         overflow-x: visible !important; /* override the scroller */
         overflow-y: scroll !important;
     }
