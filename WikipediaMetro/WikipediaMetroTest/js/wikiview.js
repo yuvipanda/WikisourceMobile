@@ -16,15 +16,24 @@
         // @fixme handle snapped mode
         var content = this._wikiview._element,
             left = content.scrollLeft,
+            top = content.scrollTop,
             children = content.children,
             selected,
             selectedIndex;
         for (var i = 0; i < children.length; i++) {
             var child = children[i];
-            if (child.offsetLeft >= left) {
-                selected = child;
-                selectedIndex = i;
-                break;
+            if (window.innerWidth <= 320) {
+                if (child.offsetTop >= top) {
+                    selected = child;
+                    selectedIndex = i;
+                    break;
+                }
+            } else {
+                if (child.offsetLeft >= left) {
+                    selected = child;
+                    selectedIndex = i;
+                    break;
+                }
             }
         }
         if (selectedIndex === undefined) {
@@ -46,8 +55,11 @@
         var content = this._wikiview._element;
 
         var section = content.children[item.index];
-        console.log('section.offsetLeft: ' + section.offsetLeft);
-        content.scrollLeft = section.offsetLeft - 10;
+        if (window.innerWidth <= 320) {
+            content.scrollTop = section.offsetTop - 10;
+        } else {
+            content.scrollLeft = section.offsetLeft - 10;
+        }
     },
     endZoom: function (isCurrentView) {
         var content = this._wikiview._element;

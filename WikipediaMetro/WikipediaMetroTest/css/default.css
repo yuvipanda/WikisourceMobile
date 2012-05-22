@@ -46,7 +46,7 @@
     overflow: hidden;
     background: #eef;
 }
-.photo-item.large {
+.win-listview .win-viewport.win-horizontal .photo-item.large {
     width: 590px;
     height: 350px;
 }
@@ -170,9 +170,6 @@
     display: none;
 }
 
-#toc {
-    padding-left: 120px;
-}
 .tocItemTemplate {
     width: 310px;
     height: 30px;
@@ -300,6 +297,18 @@ button.show-table {
     height: 200px;
 }
 
+.win-listview .win-viewport.win-vertical {
+    padding-left: 10px;
+}
+.win-listview .win-viewport.win-horizontal {
+    padding-left: 120px;
+}
+
+#offline {
+    padding-left: 120px;
+    padding-top: 20px;
+}
+
 @media all and (min-width: 321px) {
     /* Fullscreen or most of screen */
     #content {
@@ -323,9 +332,10 @@ button.show-table {
 @media all and (max-width: 320px) {
     /* Snapped */
     #content {
-        padding:  10px;
-        overflow-x: visible;
-        overflow-y: scroll;
+        padding: 10px 20px;
+        width: 280px !important;
+        overflow-x: visible !important; /* override the scroller */
+        overflow-y: scroll !important;
     }
     .lightbox-fg {
         left: 10px;

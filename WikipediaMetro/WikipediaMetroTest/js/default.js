@@ -20,16 +20,6 @@
             index: 0
         });
     };
-    // Spacer element
-    HubContents.itemList.push({
-        title: '',
-        snippet: '',
-        heading: '',
-        image: '',
-        group: ' ',
-        groupText: ' ',
-        style: 'spacer-item'
-    });
 
     // State stack!
     var state = {
@@ -53,7 +43,7 @@
         // Note: This is similar to default sorting behavior 
         //   when using WinJS.Binding.List.createGrouped()
         function compareGroups(left, right) {
-            var sort = ['Featured pictures', 'Featured articles', 'On this day', 'Recent changes'];
+            var sort = ['Featured pictures', 'Featured articles', 'On this day', 'Recent changes', 'Spacer'];
             var n = sort.indexOf(left),
                 n2 = sort.indexOf(right);
             return n - n2;
@@ -103,6 +93,7 @@
             $('#pinCmd')[0].winControl.label = mediaWiki.message('menu-win8-pin').plain();
             $('#unpinCmd')[0].winControl.label = mediaWiki.message('menu-win8-unpin').plain();
             $('#browserCmd')[0].winControl.label = mediaWiki.message('menu-open-browser').plain();
+            $('#offline').localize();
 
             initHub('en');
             // Handler for links!
@@ -437,6 +428,7 @@
             title: '',
             search: query
         });
+        $('#offline').hide();
         $('#hub').hide();
         $('#back').show();
         $('#reader').hide();
@@ -477,6 +469,11 @@
                         });
                     });
                 }
+            },
+            error: function (xhr, status, err) {
+                $('#spinner').hide();
+                $('#offline').show();
+                state.current().error = true;
             }
         });
     }
@@ -495,6 +492,7 @@
             lang: lang,
             title: title
         });
+        $('#offline').hide();
         $('#hub').hide();
         $('#back').show();
         clearSearch();
@@ -559,6 +557,11 @@
                     }
                 });
                 $('#content').append('<div class="column-spacer"></div>');
+            },
+            error: function (xhr, status, err) {
+                $('#spinner').hide();
+                $('#offline').show();
+                state.current().error = true;
             }
         });
     }
@@ -618,6 +621,9 @@
                 } else {
                     callback([]);
                 }
+            },
+            error: function (xhr, status, err) {
+                callback([], status);
             }
         });
     }
@@ -702,6 +708,7 @@
         $('#reader').hide();
         $('#back').hide();
         $('#hub').show();
+        $('#offline').hide();
         sizeContent();
     }
 
@@ -746,6 +753,9 @@
                 },
                 success: function (data) {
                     complete(data.query.recentchanges);
+                },
+                error: function (xhr, status, err) {
+                    complete([], err);
                 }
             });
         });
@@ -754,35 +764,36 @@
     function initHub(lang) {
         doShowHub(lang);
 
-        // Empty any old contents? except spacer
+        // Empty any old contents
         var list = HubContents.itemList;
-        list.splice(1, list.length - 1);
+        list.splice(0, list.length);
 
-        var pings = 4, nItems = 0;
+        var pings = 4, nErrors = 0, nItems = 0;
         var completeAnother = function () {
             pings--;
             if (pings == 0) {
                 $('#spinner').hide();
-                if (nItems == 0) {
-                    // No featured feeds for this wiki
-                    //doLoadPage(lang, 'Main Page');
-                    getMainPage(lang).then(function (title) {
-                        list.push({
-                            title: title,
-                            heading: '',
-                            snippet: '',
-                            image: '/images/secondary-tile.png',
-                            group: 'Main Page',
-                            groupText: mediaWiki.messages('section-mainpage').plain(),
-                            style: 'featured-item'
-                        });
-                    });
+                list.push({
+                    title: '',
+                    heading: '',
+                    snippet: '',
+                    image: '#',
+                    group: 'Spacer',
+                    groupText: ' ',
+                    style: 'spacer-item'
+                });
+                console.log('errors: ' + nErrors);
+                if (nErrors) {
+                    $('#offline').show();
                 }
             }
         };
 
         $('#spinner').show();
-        fetchFeed(lang, 'featured', function (htmlList) {
+        fetchFeed(lang, 'featured', function (htmlList, err) {
+            if (err) {
+                nErrors++;
+            }
             var html;
             if (htmlList.length) {
                 var txt = stripHtmlTags(htmlList[0]);
@@ -824,7 +835,10 @@
             });
             completeAnother();
         });
-        fetchFeed(lang, 'potd', function (htmlList) {
+        fetchFeed(lang, 'potd', function (htmlList, err) {
+            if (err) {
+                nErrors++;
+            }
             $('#spinner').hide();
             htmlList.slice(0, 6).forEach(function (html, index) {
                 var $html = $('<div>').html(html),
@@ -866,33 +880,40 @@
             });
             completeAnother();
         });
-        fetchFeed(lang, 'onthisday', function (htmlList) {
-            $('#spinner').hide();
-            var html = htmlList[0],
-                $html = $('<div>').html(html),
-                $lis = $html.find('li');
-            $lis.each(function () {
-                var $li = $(this),
-                    txt = stripHtmlTags($li.html()),
-                    $link = $li.find('b a'),
-                    title = extractWikiTitle($link.attr('href') + '');
-                var bits = txt.split(' – '),
-                    year = bits[0],
-                    detail = bits[1];
-                nItems++;
-                list.push({
-                    title: title,
-                    heading: year,
-                    snippet: detail,
-                    image: '',
-                    group: 'On this day',
-                    groupText: mediaWiki.message('section-onthisday').plain(),
-                    style: 'onthisday-item'
+        fetchFeed(lang, 'onthisday', function (htmlList, err) {
+            if (err) {
+                nErrors++;
+            }
+            if (htmlList.length) {
+                var html = htmlList[0],
+                    $html = $('<div>').html(html),
+                    $lis = $html.find('li');
+                $lis.each(function () {
+                    var $li = $(this),
+                        txt = stripHtmlTags($li.html()),
+                        $link = $li.find('b a'),
+                        title = extractWikiTitle($link.attr('href') + '');
+                    var bits = txt.split(' – '),
+                        year = bits[0],
+                        detail = bits[1];
+                    nItems++;
+                    list.push({
+                        title: title,
+                        heading: year,
+                        snippet: detail,
+                        image: '',
+                        group: 'On this day',
+                        groupText: mediaWiki.message('section-onthisday').plain(),
+                        style: 'onthisday-item'
+                    });
                 });
-            });
+            }
             completeAnother();
         });
-        getRecentChanges(lang).then(function (recentchanges) {
+        getRecentChanges(lang).then(function (recentchanges, err) {
+            if (err) {
+                nErrors++;
+            }
             recentchanges.forEach(function (change) {
                 if (change.ns == 0 && change.type == 'edit') {
                     nItems++;
@@ -913,6 +934,22 @@
 
     function sizeContent() {
         var $work, fudge;
+
+        // Hack to swap orientation in snapped mode
+        if (window.innerWidth <= 320) {
+            // Snapped
+            $('#toc')[0].winControl.layout = new WinJS.UI.ListLayout();
+            $('#hub-list')[0].winControl.layout = new WinJS.UI.ListLayout({
+                groupInfo: groupInfo
+            });
+        } else {
+            // Not snapped
+            $('#toc')[0].winControl.layout = new WinJS.UI.GridLayout();
+            $('#hub-list')[0].winControl.layout = new WinJS.UI.GridLayout({
+                groupInfo: groupInfo
+            });
+        }
+
         if ($('#hub').is(':visible')) {
             $work = $('#hub-list');
             fudge = 0;
