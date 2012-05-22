@@ -752,6 +752,10 @@ the scrollable divs seem to be giving us lots of bugs
 }
 
 #migrating-saved-pages-overlay {
+	display: none;
+}
+
+.migration-ready #migrating-saved-pages-overlay {
 	display: -webkit-box;
 	display: -moz-box;
 	display: box;

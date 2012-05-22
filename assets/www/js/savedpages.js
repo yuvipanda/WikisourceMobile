@@ -34,7 +34,7 @@ window.savedPages = function() {
 							mw.msg('migrating-saved-pages-confirm'),
 							function(index) {
 								if(index === 1) {
-									$("#migrating-saved-pages-overlay").show();
+									$("html").addClass("migration-ready");
 									function saveNextPage(curPage) {
 										$("#migration-status").html(mw.msg('migrating-saved-page-status', pages[curPage].title));
 										app.navigateToPage(pages[curPage].key).done(function() {
