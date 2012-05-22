@@ -56,8 +56,7 @@ chrome.scrollTo = function(selector, posY) {
 }
 
 chrome.addPlatformInitializer(function() {
-	$('html').addClass('android');
-	if (navigator.userAgent.match(/Android 2\./)) {
+	if ($('html').hasClass('android-2')) {
 		// Android 2.2/2.3 doesn't do overflow:scroll
 		// so we need to engage alternate styles for phone view.
 		$('html').removeClass('goodscroll').addClass('badscroll');
