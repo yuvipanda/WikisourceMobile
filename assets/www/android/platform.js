@@ -20,7 +20,7 @@ l10n.navigatorLang = function(success) {
 }
 
 function getAboutVersionString() {
-	return "1.2beta2";
+	return "1.2RC1";
 }
 
 (function() {

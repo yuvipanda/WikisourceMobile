@@ -171,3 +171,14 @@
 
 - Scrolling in search, saved pages and history overlays works on iOS 4.x
 - Article scrolling should be much better on iOS 4.x
+
+## Android v1.2RC1 & iOS v3.2RC1 ##
+
+### Common ###
+
+- Migrate saved pages from older versions of the app
+- Load the main page on application startup
+
+### iOS Specific ###
+
+- Removed 'Save to Read it Later' from page actions
