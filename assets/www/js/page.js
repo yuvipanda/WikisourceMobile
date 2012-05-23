@@ -60,7 +60,7 @@
 			action: 'mobileview',
 			page: title,
 			redirects: 'yes',
-			prop: 'sections',
+			prop: 'sections|text',
 			sections: 'all',
 			sectionprop: 'level|line',
 			noheadings: 'yes'
