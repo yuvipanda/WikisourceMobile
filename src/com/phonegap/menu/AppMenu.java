@@ -19,9 +19,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.phonegap.DroidGap;
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
+//import com.phonegap.DroidGap;
+import org.apache.cordova.*;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 
 class MenuInfo {
 	public String label = "";

@@ -6,9 +6,9 @@ import org.json.JSONException;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
-import com.phonegap.api.PluginResult.Status;
+import org.apache.cordova.api.PluginResult;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult.Status;
 
 public class ToastPlugin extends Plugin {
 
@@ -46,7 +46,7 @@ public class ToastPlugin extends Plugin {
 
 		@Override
 		public void run() {
-			Toast.makeText(ctx, message, length).show();
+			Toast.makeText(ctx.getContext(), message, length).show();
 		}
 
 	}

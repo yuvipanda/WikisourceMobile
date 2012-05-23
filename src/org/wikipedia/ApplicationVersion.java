@@ -4,10 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.phonegap.api.LOG;
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
-import com.phonegap.api.PluginResult.Status;
+import org.apache.cordova.api.LOG;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
+import org.apache.cordova.api.PluginResult.Status;
 
 import android.content.pm.PackageManager.NameNotFoundException;
 
@@ -15,7 +15,7 @@ public class ApplicationVersion extends Plugin {
 	public JSONObject getVersion() {
 		JSONObject info = new JSONObject();
 		try {
-			info.put("version", ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName.toString());
+			info.put("version", ctx.getContext().getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName.toString());
 		} catch (NameNotFoundException e) {
 			LOG.d("error", e.getMessage());
 		} catch (JSONException e) {

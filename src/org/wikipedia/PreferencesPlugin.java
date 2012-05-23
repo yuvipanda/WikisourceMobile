@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 
 public class PreferencesPlugin extends Plugin {
 	public static final String PREFS_NAME = "WikipediaPrefs";
@@ -26,7 +26,7 @@ public class PreferencesPlugin extends Plugin {
 			}
 			String id = obj.getString("id");
 
-			SharedPreferences settings = this.ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+			SharedPreferences settings = this.ctx.getContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
 			if (action.equals("get")) {
 				if (!settings.contains(id)) {

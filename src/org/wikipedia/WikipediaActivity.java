@@ -5,7 +5,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.phonegap.DroidGap;
+import org.apache.cordova.DroidGap;
 
 public class WikipediaActivity extends DroidGap {
 	@Override

@@ -3,8 +3,8 @@ package com.phonegap.softkeyboard;
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 import org.json.*;
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 
 public class SoftKeyBoard extends Plugin {
 

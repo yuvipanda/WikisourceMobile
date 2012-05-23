@@ -6,8 +6,8 @@ import org.json.JSONException;
 import android.content.Intent;
 import android.util.Log;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 
 public class NearMePlugin extends Plugin {
 
@@ -27,7 +27,7 @@ public class NearMePlugin extends Plugin {
 		}
 		if (action.compareTo("startNearMeActivity") == 0) {
 			try {
-				Intent intent = new Intent(ctx, Class.forName("org.wikipedia.NearMeActivity"));
+				Intent intent = new Intent(ctx.getContext(), Class.forName("org.wikipedia.NearMeActivity"));
 				intent.putExtra("language", lang);
 				ctx.startActivityForResult((Plugin) this, intent, GET_GEONAME_URL);
 				result = new PluginResult(PluginResult.Status.NO_RESULT);

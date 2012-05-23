@@ -17,8 +17,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
 
 public final class URLCache extends Plugin {
 
@@ -39,7 +39,7 @@ public final class URLCache extends Plugin {
 					&& args.length() >= 1) {
 				// First check if the file exists already
 				String fileName = md5(uri);
-				String fileDir = ctx.getFilesDir().getAbsolutePath();
+				String fileDir = ctx.getContext().getFilesDir().getAbsolutePath();
 				String filePath = fileDir + "/" + fileName;
 
 				// Log.d(TAG, "URI: " + uri + " filePath: " + filePath);
@@ -62,7 +62,7 @@ public final class URLCache extends Plugin {
 						URLConnection urlConnection = u.openConnection();
 						dis = new DataInputStream(new BufferedInputStream(
 								urlConnection.getInputStream()));
-						out = ctx
+						out = ctx.getContext()
 								.openFileOutput(fileName, Context.MODE_PRIVATE);
 						while ((length = dis.read(buffer)) != -1) {
 							out.write(buffer, 0, length);

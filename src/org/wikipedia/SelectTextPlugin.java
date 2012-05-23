@@ -5,9 +5,9 @@ import org.json.JSONArray;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
-import com.phonegap.api.PluginResult.Status;
+import org.apache.cordova.api.Plugin;
+import org.apache.cordova.api.PluginResult;
+import org.apache.cordova.api.PluginResult.Status;
 
 public class SelectTextPlugin extends Plugin {
 
