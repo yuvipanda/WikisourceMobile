@@ -17,32 +17,20 @@
  under the License.
  */
 
-//
-//  AppDelegate.h
-//  Wikipedia-iOS
-//
-//  Created by Yuvi Panda on 24/02/12.
-//  Copyright yuvipanda@gmail.com 2012. All rights reserved.
-//
+#import <Foundation/Foundation.h>
 
-#import <UIKit/UIKit.h>
+@interface NSDictionary(org_apache_cordova_NSDictionary_Extension)
 
-#import "CDVDeprecated.h"
+- (bool) existsValue:(NSString*)expectedValue forKey:(NSString*)key;
+- (NSInteger) integerValueForKey:(NSString*)key defaultValue:(NSInteger)defaultValue withRange:(NSRange)range;
+- (BOOL) typeValueForKey:(NSString *)key isArray:(BOOL*)bArray isNull:(BOOL*)bNull isNumber:(BOOL*) bNumber isString:(BOOL*)bString;
+- (BOOL) valueForKeyIsArray:(NSString *)key;
+- (BOOL) valueForKeyIsNull:(NSString *)key;
+- (BOOL) valueForKeyIsString:(NSString *)key;
+- (BOOL) valueForKeyIsNumber:(NSString *)key;
 
-
-@interface AppDelegate : NSObject < UIApplicationDelegate, UIWebViewDelegate, PGCommandDelegate > {
-
-	NSString* invokeString;
-}
-
-// invoke string is passed to your app on launch, this is only valid if you 
-// edit Wikipedia-iOS.plist to add a protocol
-// a simple tutorial can be found here : 
-// http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-
-@property (nonatomic, copy)  NSString* invokeString;
-@property (nonatomic, retain) IBOutlet UIWindow* window;
-@property (nonatomic, retain) IBOutlet PGViewController* viewController;
+- (NSDictionary*) dictionaryWithLowercaseKeys;
 
 @end
+
 

@@ -7,7 +7,7 @@
 // MIT Licensed
 
 #import <Foundation/Foundation.h>
-#import <PhoneGap/PGPlugin.h>
+#import "CDVDeprecated.h"
 
 @interface ActionSheet : PGPlugin <UIActionSheetDelegate> {
     

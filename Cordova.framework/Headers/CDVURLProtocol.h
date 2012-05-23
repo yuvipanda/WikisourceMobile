@@ -17,32 +17,25 @@
  under the License.
  */
 
-//
-//  AppDelegate.h
-//  Wikipedia-iOS
-//
-//  Created by Yuvi Panda on 24/02/12.
-//  Copyright yuvipanda@gmail.com 2012. All rights reserved.
-//
+#import <Foundation/Foundation.h>
 
-#import <UIKit/UIKit.h>
-
-#import "CDVDeprecated.h"
-
-
-@interface AppDelegate : NSObject < UIApplicationDelegate, UIWebViewDelegate, PGCommandDelegate > {
-
-	NSString* invokeString;
+@interface CDVURLProtocol : NSURLProtocol {
 }
 
-// invoke string is passed to your app on launch, this is only valid if you 
-// edit Wikipedia-iOS.plist to add a protocol
-// a simple tutorial can be found here : 
-// http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
++ (void) registerPGHttpURLProtocol 
+#ifdef __clang__
+    __attribute__ ((deprecated("Renamed - use registerUrlProtocol instead.")));
+#else
+    __attribute__ ((deprecated()));
+#endif
 
-@property (nonatomic, copy)  NSString* invokeString;
-@property (nonatomic, retain) IBOutlet UIWindow* window;
-@property (nonatomic, retain) IBOutlet PGViewController* viewController;
++ (void) registerURLProtocol;
 
 @end
 
+@interface CDVHTTPURLResponse : NSHTTPURLResponse {
+} 
+
+- (CDVHTTPURLResponse*) initWithUnauthorizedURL:(NSURL*)url;
+
+@end

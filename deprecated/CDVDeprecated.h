@@ -18,31 +18,35 @@
  */
 
 //
-//  AppDelegate.h
-//  Wikipedia-iOS
+//  CDVDeprecated.h
+//  Apache Cordova
 //
-//  Created by Yuvi Panda on 24/02/12.
-//  Copyright yuvipanda@gmail.com 2012. All rights reserved.
+//  Bridge header file for Cordova 1.5 upgrades.
+//  Replace "#import PHONEGAP_FRAMEWORK" block in AppDelegate.h, AppDelegate.m, 
+//      MainViewController.h with this header
 //
 
-#import <UIKit/UIKit.h>
+#ifdef CORDOVA_FRAMEWORK
+	#import <Cordova/CDV.h>
+#else
+	#import "CDV.h"
+#endif
 
-#import "CDVDeprecated.h"
-
-
-@interface AppDelegate : NSObject < UIApplicationDelegate, UIWebViewDelegate, PGCommandDelegate > {
-
-	NSString* invokeString;
-}
-
-// invoke string is passed to your app on launch, this is only valid if you 
-// edit Wikipedia-iOS.plist to add a protocol
-// a simple tutorial can be found here : 
-// http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-
-@property (nonatomic, copy)  NSString* invokeString;
-@property (nonatomic, retain) IBOutlet UIWindow* window;
-@property (nonatomic, retain) IBOutlet PGViewController* viewController;
-
+__attribute__ ((deprecated)) @interface PGPlugin : CDVPlugin
 @end
 
+__attribute__ ((deprecated)) @interface PGViewController : CDVViewController
+@end
+
+
+__attribute__ ((deprecated)) @interface PGURLProtocol : CDVURLProtocol
+@end
+
+__attribute__ ((deprecated)) @interface InvokedUrlCommand : CDVInvokedUrlCommand
+@end
+
+__attribute__ ((deprecated))  @protocol PGCommandDelegate <CDVCommandDelegate>
+@end
+
+
+#define PGPluginHandleOpenURLNotification CDVPluginHandleOpenURLNotification

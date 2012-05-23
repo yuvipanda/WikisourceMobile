@@ -17,32 +17,21 @@
  under the License.
  */
 
-//
-//  AppDelegate.h
-//  Wikipedia-iOS
-//
-//  Created by Yuvi Panda on 24/02/12.
-//  Copyright yuvipanda@gmail.com 2012. All rights reserved.
-//
-
-#import <UIKit/UIKit.h>
-
-#import "CDVDeprecated.h"
+#import <Foundation/Foundation.h>
 
 
-@interface AppDelegate : NSObject < UIApplicationDelegate, UIWebViewDelegate, PGCommandDelegate > {
+@interface NSMutableArray (QueueAdditions)
 
-	NSString* invokeString;
-}
-
-// invoke string is passed to your app on launch, this is only valid if you 
-// edit Wikipedia-iOS.plist to add a protocol
-// a simple tutorial can be found here : 
-// http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-
-@property (nonatomic, copy)  NSString* invokeString;
-@property (nonatomic, retain) IBOutlet UIWindow* window;
-@property (nonatomic, retain) IBOutlet PGViewController* viewController;
+- (id) pop;
+- (id) queueHead;
+- (id) dequeue;
+- (void) enqueue:(id)obj;
 
 @end
 
+
+@interface NSMutableArray (Comparisons)
+
+- (id) objectAtIndex:(NSUInteger)index withDefault:(id)aDefault;
+
+@end

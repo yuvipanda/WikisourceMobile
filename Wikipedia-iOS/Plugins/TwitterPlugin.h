@@ -8,12 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
-#ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/PGPlugin.h>
-#else
-    #import "PGPlugin.h"
-#endif
-
+#import "CDVDeprecated.h"
 @interface TwitterPlugin : PGPlugin{
 }
 

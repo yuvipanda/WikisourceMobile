@@ -85,7 +85,7 @@
 	[result setObject:[NSNumber numberWithInteger:buttonIndex] forKey:@"buttonIndex"];
 	
 	// Create Plugin Result
-	PluginResult* pluginResult = [PluginResult resultWithStatus:PGCommandStatus_OK messageAsDictionary:result];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
 	
 	// Checking if cancel was clicked
 	if (buttonIndex != actionSheet.cancelButtonIndex) {
