@@ -257,6 +257,8 @@
                     menu.show();
                 });
             });
+
+            app.start();
         };
     });
 
@@ -1081,8 +1083,6 @@
         });
         menu.show();
     }
-
-    app.start();
 })();
 function groupInfo() {
     return {
