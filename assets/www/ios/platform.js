@@ -68,6 +68,7 @@ function popupMenu(items, callback, options) {
 
 chrome.addPlatformInitializer(function() {
 	console.log("Logging in!");
+    window.plugins.FB = CDV.FB;
 	window.plugins.FB.init("[FB-APP-ID]", function() {
 		console.log("failed FB init:(");
 	});

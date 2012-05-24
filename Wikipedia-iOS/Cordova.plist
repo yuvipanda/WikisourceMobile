@@ -62,7 +62,7 @@
 		<string>CDVBattery</string>
         <key>com.phonegap.twitter</key>
 		<string>TwitterPlugin</string>
-		<key>com.phonegap.facebook.Connect</key>
+		<key>org.apache.cordova.facebook.Connect</key>
 		<string>FacebookConnectPlugin</string>
 	</dict>
 </dict>
