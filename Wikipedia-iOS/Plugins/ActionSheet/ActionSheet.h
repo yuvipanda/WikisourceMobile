@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CDVDeprecated.h"
 
-@interface ActionSheet : PGPlugin <UIActionSheetDelegate> {
+@interface ActionSheet : CDVPlugin <UIActionSheetDelegate> {
     
 	NSString* callbackID;
 

@@ -9,7 +9,7 @@
 #import <Twitter/Twitter.h>
 #import <Accounts/Accounts.h>
 #import "CDVDeprecated.h"
-@interface TwitterPlugin : PGPlugin{
+@interface TwitterPlugin : CDVPlugin{
 }
 
 - (void) isTwitterAvailable:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
