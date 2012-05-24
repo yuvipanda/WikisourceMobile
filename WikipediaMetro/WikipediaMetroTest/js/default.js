@@ -951,6 +951,7 @@
             $('#hub-list')[0].winControl.layout = new WinJS.UI.ListLayout({
                 groupInfo: groupInfo
             });
+            $('#content').scrollLeft(0); // avoid being scrolled off into nothingness
         } else {
             // Not snapped
             $('#toc')[0].winControl.layout = new WinJS.UI.GridLayout();
