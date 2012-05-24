@@ -172,6 +172,13 @@
                     $("#unpinCmd").hide();
                     $("#pinCmd").show();
                 }
+                if (state.current().type == 'article') {
+                    $('#pinCmd').removeAttr('disabled');
+                    $('#unpinCmd').removeAttr('disabled');
+                } else {
+                    $('#pinCmd').attr('disabled', 'disabled');
+                    $('#unpinCmd').attr('disabled', 'disabled');
+                }
             });
 
             $('#pinCmd').click(function () {
