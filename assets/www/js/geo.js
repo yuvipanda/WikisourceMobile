@@ -20,7 +20,15 @@ window.geo = function() {
 			// Disable webkit 3d CSS transformations for tile positioning
 			// Causes lots of flicker in PhoneGap for some reason...
 			L.Browser.webkit3d = false;
-			geo.map = new L.Map('map');
+			options = {};
+			if (navigator.userAgent.match(/Android 2/)) {
+				// Android 2.x
+				// @todo enable the pinch-zoom plugin
+			} else {
+				options.touchZoom = true;
+				options.zoomControl = false;
+			}
+			geo.map = new L.Map('map', options);
 			//var tiles = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			var tiles = new L.TileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png', {
 				maxZoom: 18,
