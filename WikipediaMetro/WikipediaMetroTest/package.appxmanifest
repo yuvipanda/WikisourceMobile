@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="WikimediaFoundation.Wikipedia" Version="1.0.0.19" Publisher="CN=2180B9A4-DDFD-4BFD-8D7E-EADC9C394EF5" />
+  <Identity Name="WikimediaFoundation.Wikipedia" Version="1.0.0.20" Publisher="CN=2180B9A4-DDFD-4BFD-8D7E-EADC9C394EF5" />
   <Properties>
     <DisplayName>Wikipedia</DisplayName>
     <PublisherDisplayName>Wikimedia Foundation</PublisherDisplayName>
