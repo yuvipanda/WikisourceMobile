@@ -769,3 +769,10 @@ the scrollable divs seem to be giving us lots of bugs
 
 	font-size: 18px;
 }
+
+.leaflet-marker-pane,
+.leaflet-shadow-pane,
+.leaflet-overlay-pane {
+	/* hack to work around https://github.com/CloudMade/Leaflet/issues/335 */
+    -webkit-transform: translateZ(0px);
+}
