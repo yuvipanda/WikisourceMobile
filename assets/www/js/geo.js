@@ -68,7 +68,11 @@ window.geo = function() {
 			geo.map.on('viewreset', ping);
 			geo.map.on('locationfound', ping);
 			geo.map.on('moveend', ping);
-			geo.map.locateAndSetView(18, {enableHighAccuracy: true});
+			geo.map.locate({
+				setView: true,
+				maxZoom: 18,
+				enableHighAccuracy: true
+			});
 		}
 		else {
 			findAndDisplayNearby( args.lat, args.lon );
