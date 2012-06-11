@@ -142,7 +142,6 @@ window.chrome = function() {
 			MobileFrontend.references.init($("#content")[0], true, {onClickReference: onClickReference} );
 
 			app.setFontSize(preferencesDB.get('fontSize'));
-			chrome.initContentLinkHandlers("#main");
 			savedPages.doMigration().done(function() {
 				chrome.loadFirstPage().done(function() {
 					$("#migrating-saved-pages-overlay").hide();
@@ -267,13 +266,12 @@ window.chrome = function() {
 	}
 
 	function initContentLinkHandlers(selector) {
-		$(selector).delegate('a', 'click', function(event) {
+		$(selector).find('a').bind('click', function(event) {
 			var target = this,
 				url = target.href,             // expanded from relative links for us
 				href = $(target).attr('href'); // unexpanded, may be relative
 
 			event.preventDefault();
-
 			if (url.match(new RegExp("^https?://([^/]+)\." + PROJECTNAME + "\.org/wiki/"))) {
 				// ...and load it through our intermediate cache layer.
 				app.navigateToPage(url);
