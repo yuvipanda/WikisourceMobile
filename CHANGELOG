@@ -182,3 +182,16 @@
 ### iOS Specific ###
 
 - Removed 'Save to Read it Later' from page actions
+
+## Android v1.2RC2 & iOS v3.2RC2 ##
+
+### Common ###
+
+- Fix bug that made saving pages not have any text in them
+- Prevent history being polluted with multiple navigates
+- Enable pinch to zoom on map for everything except Android 2.x
+
+### Android ###
+
+- Fix bug causing map markers to hide in Android 4.x
+- Associate app with only wiki article links in Android 
