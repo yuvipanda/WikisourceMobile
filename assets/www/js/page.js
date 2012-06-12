@@ -71,27 +71,27 @@
 	};
 
 	Page.prototype.requestLangLinks = function() {
-		var d = $.Deferred();
 		if(this.langLinks) {
+			var d = $.Deferred();
 			d.resolve(this.langLinks);
 			return d;
 		}
 		var that = this;
-		app.makeAPIRequest({
+		return app.makeAPIRequest({
 			action: 'parse',
 			page: this.title,
 			prop: 'langlinks'
-		}, this.lang).done(function(data) {
-			var langLinks = [];
-			$.each(data.parse.langlinks, function(i, langLink) {
-				langLinks.push({lang: langLink.lang, title: langLink['*']});
-			});
-			that.langLinks = langLinks;
-			d.resolve(langLinks);
-		}).fail(function(data) {
-			d.reject(data);
+		}, this.lang, {
+			dataFilter: function(text) {
+				var data = JSON.parse(text);
+				var langLinks = [];
+				$.each(data.parse.langlinks, function(i, langLink) {
+					langLinks.push({lang: langLink.lang, title: langLink['*']});
+				});
+				that.langLinks = langLinks;
+				return langLinks;
+			}
 		});
-		return d;
 	};
 
 	Page.prototype.getSectionHtml = function(id) {
