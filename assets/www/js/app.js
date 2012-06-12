@@ -235,15 +235,13 @@ window.app = function() {
 		}
 	}
 
-	function makeAPIRequest(params, lang, method, extraOptions) {
+	function makeAPIRequest(params, lang, extraOptions) {
 		params = params || {};
-		method = method || "GET";
 		params.format = 'json'; // Force JSON
 		lang = lang || preferencesDB.get('language');
 		var url = app.baseUrlForLanguage(lang) + '/w/api.php';
 		var defaultOptions = {
 			url: url,
-			type: method,
 			data: params,
 			// Making this 'text' and parsing the JSON ourselves makes things much easier
 			// Than making it as 'JSON' for pre-processing via dataFilter

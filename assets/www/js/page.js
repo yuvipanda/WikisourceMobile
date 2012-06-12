@@ -63,7 +63,7 @@
 			sections: 'all',
 			sectionprop: 'level|line',
 			noheadings: 'yes'
-		}, lang, 'GET', {
+		}, lang, {
 			dataFilter: function(data) {
 				return Page.fromRawJSON(title, JSON.parse(data), lang);
 			}
