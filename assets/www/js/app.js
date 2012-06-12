@@ -97,13 +97,20 @@ window.app = function() {
 		var d = $.Deferred();
 
 		function doRequest() {
-			Page.requestFromTitle(title, language).done(function(page) {
+			app.curPageReq = Page.requestFromTitle(title, language).done(function(page) {
 				if(page === null) {
 					setErrorPage(404);
 				}
 				setCurrentPage(page);
+				app.curPageReq = null;
 				d.resolve(page);
-			}).fail(function(xhr) {
+			}).fail(function(xhr, textStatus, errorThrown) {
+				app.curPageReq = null;
+				if(textStatus === "abort") {
+					// User cancelled action. Do nothing!
+					console.log("User cancelled action!");
+					return;
+				}
 				setErrorPage(xhr.status);	
 				d.reject(xhr);
 			});
@@ -275,7 +282,8 @@ window.app = function() {
 		curPage: null,
 		navigateTo: navigateTo,
 		getWikiMetadata: getWikiMetadata,
-		loadMainPage: loadMainPage
+		loadMainPage: loadMainPage,
+		curPageReq: null
 	};
 
 	return exports;

@@ -19,7 +19,7 @@ window.chrome = function() {
 	}
 
 	function isSpinning() {
-		$('#search').hasClass('inProgress');
+		return $('#search').hasClass('inProgress');
 	}
 
 	function renderHtml(page) {
@@ -117,7 +117,14 @@ window.chrome = function() {
 				return false;
 			});
 			$("#searchForm").bind('submit', function() {
-				window.search.performSearch($("#searchParam").val(), false);
+				if(isSpinning()) {
+					if(app.curPageReq !== null) {
+						app.curPageReq.abort();
+						chrome.hideSpinner();
+					}
+				} else {
+					search.performSearch($("#searchParam").val(), false);
+				}
 				return false;
 			}).bind('keypress', function(event) {
 				if(event.keyCode == 13)
