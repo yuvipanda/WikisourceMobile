@@ -228,17 +228,23 @@ window.app = function() {
 		}
 	}
 
-	function makeAPIRequest(params, lang, method) {
-		// Force JSON
-		params.format = 'json';
-		lang = lang || preferencesDB.get('language');
+	function makeAPIRequest(params, lang, method, extraOptions) {
+		params = params || {};
 		method = method || "GET";
+		params.format = 'json'; // Force JSON
+		lang = lang || preferencesDB.get('language');
 		var url = app.baseUrlForLanguage(lang) + '/w/api.php';
-		if(method === 'POST') {
-			return $.post(url, params);
-		} else {
-			return $.get(url, params);
-		}
+		var defaultOptions = {
+			url: url,
+			type: method,
+			data: params,
+			// Making this 'text' and parsing the JSON ourselves makes things much easier
+			// Than making it as 'JSON' for pre-processing via dataFilter
+			// See https://forum.jquery.com/topic/datafilter-function-and-json-string-result-problems
+			dataType: 'text'
+		};
+		var options = $.extend(defaultOptions, extraOptions);
+		return $.ajax(options);
 	}
 
 	function track(eventId) {
