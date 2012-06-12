@@ -55,6 +55,8 @@ window.geo = function() {
 			geoLookup( lat, lon, preferencesDB.get("language"), function( data ) {
 				geoAddMarkers( data );
 			}, function(err) {
+				chrome.popupErrorMessage("error");
+				chrome.showContent();
 				console.log(JSON.stringify(err));
 			});
 		};
