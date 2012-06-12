@@ -38,11 +38,13 @@ window.chrome = function() {
 	}
 
 	function populateSection(sectionID) {
-		var $contentBlock = $("#content_" + sectionID);
+		var selector = "#content_" + sectionID;
+		var $contentBlock = $(selector);
 		if(!$contentBlock.data('populated')) {
 			var sectionHtml = app.curPage.getSectionHtml(sectionID);
 			$contentBlock.append($(sectionHtml)).data('populated', true);
 			MobileFrontend.references.init($contentBlock[0], false, {animation: 'none'});
+			chrome.initContentLinkHandlers(selector);
 		} 
 	}
 
