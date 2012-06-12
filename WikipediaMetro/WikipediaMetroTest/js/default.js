@@ -95,6 +95,16 @@
             $('#browserCmd')[0].winControl.label = mediaWiki.message('menu-open-browser').plain();
             $('#offline').localize();
 
+            WinJS.Application.onsettings = function (e) {
+                e.detail.applicationcommands = {
+                    about: {
+                        title: mediaWiki.message('menu-about').plain(),
+                        href: "/about.html"
+                    }
+                };
+                WinJS.UI.SettingsFlyout.populateSettings(e);
+            }
+
             initHub('en');
             // Handler for links!
             $(document).on('click', 'a', function (event) {

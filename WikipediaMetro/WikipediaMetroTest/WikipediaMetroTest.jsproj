@@ -433,6 +433,7 @@
     <Content Include="..\..\assets\www\messages\messages-zh-tw.properties">
       <Link>messages\messages-zh-tw.properties</Link>
     </Content>
+    <Content Include="about.html" />
     <Content Include="default.html" />
     <Content Include="images\back.svg" />
     <Content Include="images\secondary-tile.png" />
