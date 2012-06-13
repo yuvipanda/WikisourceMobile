@@ -47,6 +47,7 @@ window.search = function() {
 				getSearchResults(suggestion, 'true');
 			}
 		}).fail(handleNetworkFailure);
+		chrome.setSpinningReq(curReq);
 	}
 
 	function getSuggestionFromSuggestionResults(suggestion_results) {
@@ -74,6 +75,7 @@ window.search = function() {
 			}
 			renderResults([term, searchResults], false);
 		}).fail(handleNetworkFailure);
+		chrome.setSpinningReq(curReq);
 		return curReq;
 	}
 
@@ -93,6 +95,7 @@ window.search = function() {
 				renderResults(results, didyoumean);
 			}
 		}).fail(handleNetworkFailure);
+		chrome.setSpinningReq(curReq);
 		return curReq;
 	}
 
