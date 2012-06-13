@@ -282,9 +282,7 @@ window.app = function() {
 		curPage: null,
 		navigateTo: navigateTo,
 		getWikiMetadata: getWikiMetadata,
-		loadMainPage: loadMainPage,
-		// Request that is currently causing the spinner to spin
-		curSpinningReq: null
+		loadMainPage: loadMainPage
 	};
 
 	return exports;

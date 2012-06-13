@@ -1,5 +1,8 @@
 window.chrome = function() {
 
+	// Request that is currently causing the spinner to spin
+	var curSpinningReq = null;
+
 	// List of functions to be called on a per-platform basis before initialize
 	var platform_initializers = [];
 	function addPlatformInitializer(fun) {
@@ -7,11 +10,11 @@ window.chrome = function() {
 	}
 
 	function setSpinningReq(req) {
-		app.curSpinningReq = req;
+		curSpinningReq = req;
 		req.done(function() {
-			app.curSpinningReq = null;
+			curSpinningReq = null;
 		}).fail(function() {
-			app.curSpinningReq = null;
+			curSpinningReq = null;
 		});
 		return req;
 	}
@@ -128,9 +131,9 @@ window.chrome = function() {
 			});
 			$("#searchForm").bind('submit', function() {
 				if(isSpinning()) {
-					if(app.curSpinningReq !== null) {
-						app.curSpinningReq.abort();
-						app.curSpinningReq = null;
+					if(curSpinningReq !== null) {
+						curSpinningReq.abort();
+						curSpinningReq = null;
 						chrome.hideSpinner();
 					}
 				} else {
