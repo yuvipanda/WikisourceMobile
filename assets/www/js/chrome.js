@@ -6,6 +6,16 @@ window.chrome = function() {
 		platform_initializers.push(fun);
 	}
 
+	function setSpinningReq(req) {
+		app.curSpinningReq = req;
+		req.done(function() {
+			app.curSpinningReq = null;
+		}).fail(function() {
+			app.curSpinningReq = null;
+		});
+		return req;
+	}
+
 	function showSpinner() {
 		$('.titlebar .spinner').css({display:'block'});
 		$('#search').addClass('inProgress');
@@ -313,6 +323,7 @@ window.chrome = function() {
 		initialize: initialize,
 		renderHtml: renderHtml,
 		loadFirstPage: loadFirstPage,
+		setSpinningReq: setSpinningReq,
 		showSpinner: showSpinner,
 		hideSpinner: hideSpinner,
 		isSpinning: isSpinning,

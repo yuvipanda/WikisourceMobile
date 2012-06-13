@@ -11,7 +11,7 @@ window.languageLinks = function() {
 
 	function showLangLinks(page) {
 		chrome.showSpinner();
-		app.curSpinningReq = page.requestLangLinks().done(function(langLinks) {
+		var req = page.requestLangLinks().done(function(langLinks) {
 			var template = templates.getTemplate("language-links-template");
 			app.getWikiMetadata().done(function(wikis) {
 				$.each(langLinks, function(i, link) {
@@ -39,6 +39,7 @@ window.languageLinks = function() {
 			chrome.hideSpinner();
 			chrome.popupErrorMessage(xhr);
 		});
+		chrome.setSpinningReq(req);
 	}
 
 	return {
