@@ -33,16 +33,19 @@ window.chrome = function() {
 		}
 		$("#main").html(page.toHtml());
 
+		chrome.initContentLinkHandlers("#main");
 		MobileFrontend.references.init($("#main")[0], false, {animation: 'none', onClickReference: onClickReference});
 		handleSectionExpansion();
 	}
 
 	function populateSection(sectionID) {
-		var $contentBlock = $("#content_" + sectionID);
+		var selector = "#content_" + sectionID;
+		var $contentBlock = $(selector);
 		if(!$contentBlock.data('populated')) {
 			var sectionHtml = app.curPage.getSectionHtml(sectionID);
 			$contentBlock.append($(sectionHtml)).data('populated', true);
-			MobileFrontend.references.init($contentBlock[0], false, {animation: 'none'});
+			chrome.initContentLinkHandlers(selector);
+			MobileFrontend.references.init($contentBlock[0], false, {animation: 'none', onClickReference: onClickReference});
 		} 
 	}
 
@@ -266,7 +269,7 @@ window.chrome = function() {
 	}
 
 	function initContentLinkHandlers(selector) {
-		$(selector).find('a').bind('click', function(event) {
+		$(selector).find('a').unbind('click').bind('click', function(event) {
 			var target = this,
 				url = target.href,             // expanded from relative links for us
 				href = $(target).attr('href'); // unexpanded, may be relative
