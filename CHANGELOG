@@ -195,3 +195,11 @@
 
 - Fix bug causing map markers to hide in Android 4.x
 - Associate app with only wiki article links in Android 
+
+## Android v1.2RC3 & iOS v3.2RC3 ##
+
+### Common ###
+
+- Make requests cancellable (Tapping the 'X' cancels current request)
+- Show error message when opening nearby view without internet access
+- Make sure that references are being shown properly
