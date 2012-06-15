@@ -203,3 +203,7 @@
 - Make requests cancellable (Tapping the 'X' cancels current request)
 - Show error message when opening nearby view without internet access
 - Make sure that references are being shown properly
+
+## Android v1.2 && iOS v3.2 ##
+
+- Re-included CSS hacks for inline styles
