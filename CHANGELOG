@@ -204,6 +204,10 @@
 - Show error message when opening nearby view without internet access
 - Make sure that references are being shown properly
 
-## Android v1.2 && iOS v3.2 ##
+## Android v1.2 ##
 
 - Re-included CSS hacks for inline styles
+
+## Android v1.2.1 ##
+
+- Bump version number for Android UserAgent
