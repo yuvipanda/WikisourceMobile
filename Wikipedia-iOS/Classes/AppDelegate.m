@@ -143,7 +143,7 @@
     UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
     NSString *currentUserAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     
-    NSDictionary *userAgentDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@%@",@"WikipediaMobile/3.1 ",currentUserAgent], @"UserAgent", nil];
+    NSDictionary *userAgentDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@%@",@"WikipediaMobile/3.2 ",currentUserAgent], @"UserAgent", nil];
     [webView release];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:userAgentDictionary];    
