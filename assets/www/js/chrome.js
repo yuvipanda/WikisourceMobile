@@ -120,6 +120,16 @@ window.chrome = function() {
 					app.navigateTo(window.LICENSEPAGE, "en");
 					return false;
 				});
+				savedPages.doMigration().done(function() {
+					chrome.loadFirstPage().done(function() {
+						$("#migrating-saved-pages-overlay").hide();
+					});
+				}).fail(function() {
+					navigator.notification.alert(mw.msg('migrating-saved-pages-failed'), function() {
+						$("#migrating-saved-pages-overlay").hide();
+					});
+					chrome.loadFirstPage();
+				});
 			});
 			l10n.initLanguages();
 
@@ -166,16 +176,6 @@ window.chrome = function() {
 			MobileFrontend.references.init($("#content")[0], true, {onClickReference: onClickReference} );
 
 			app.setFontSize(preferencesDB.get('fontSize'));
-			savedPages.doMigration().done(function() {
-				chrome.loadFirstPage().done(function() {
-					$("#migrating-saved-pages-overlay").hide();
-				});
-			}).fail(function() {
-				navigator.notification.alert(mw.msg('migrating-saved-pages-failed'), function() {
-					$("#migrating-saved-pages-overlay").hide();
-				});
-				chrome.loadFirstPage();
-			});
 		});
 
 	}
