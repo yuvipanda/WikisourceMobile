@@ -81,22 +81,28 @@ window.urlCache = function() {
 			});
 		}
 		console.log("About to map stuff");
-
+		var imageReplacements = [];
 		domParent.find("img").each(function(i, img) {
-			replacements[$(img).attr("src")] =  urlCache.dataUrlForImage(img);
-		});
-
-		$.each(replacements, function(href, dataURI) {
-			data = data.replace(href, dataURI);
-		});
-
-		console.log("Done mapping stuff");
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-			function(fs){
-				console.log(filePath);
-				fs.root.getFile(filePath, {create: true}, saveFile, error);
+			var ir = $.Deferred();
+			$(img).load(function() {
+				replacements[$(img).attr("src")] =  urlCache.dataUrlForImage(img);
+				ir.resolve();
 			});
-		console.log("Technically done");
+			imageReplacements.push(ir);
+		});
+		$.when.apply($, imageReplacements).done(function() {
+			$.each(replacements, function(href, dataURI) {
+				data = data.replace(href, dataURI);
+			});
+
+			console.log("Done mapping stuff");
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+				function(fs){
+					console.log(filePath);
+					fs.root.getFile(filePath, {create: true}, saveFile, error);
+				});
+			console.log("Technically done");
+		});
 		return d;
 	}
 
