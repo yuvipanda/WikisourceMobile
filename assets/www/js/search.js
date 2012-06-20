@@ -137,12 +137,12 @@ window.search = function() {
 		});
 		chrome.hideSpinner();
 		chrome.hideOverlays();
+		$('#searchresults').localize().show();
 		if(!chrome.isTwoColumnView()) {
 			$("#content").hide(); // Not chrome.hideContent() since we want the header
 		} else {
 			$("html").addClass('overlay-open');
 		}
-		$('#searchresults').localize().show();
 		chrome.setupScrolling('#searchresults .scroller');
 	}
 
