@@ -34,8 +34,6 @@ function aboutPage() {
 		$("#about-contributors").text($.trim(authors).split('\n').join(', '));
 		$("#about-credits").html(window.CREDITS.join('<br />'));
 		$("#about-license").html("<br />" + mw.message("about-license"));
-		chrome.hideOverlays();
-		chrome.hideContent();
 		$("#about-page-overlay").localize().show();
 		$("#about-page-overlay a").bind('click', function(event) {
 			// Force web links to open in external browser
@@ -48,6 +46,7 @@ function aboutPage() {
 			$("#about-page-overlay").hide();
 			appSettings.showSettings();
 		});
+		chrome.hideContent();
 		chrome.setupScrolling('#about-page-overlay .scroller');
 	});
 }
