@@ -80,17 +80,32 @@ window.urlCache = function() {
 				};
 			});
 		}
+
 		console.log("About to map stuff");
 		var imageReplacements = [];
 		domParent.find("img").each(function(i, img) {
 			var ir = $.Deferred();
-			$(img).load(function() {
-				replacements[$(img).attr("src")] =  urlCache.dataUrlForImage(img);
+			var src = $(img).attr('src');
+			console.log("Starting for " + src);
+			if(img.complete) {
+				// Image has already loaded!
+				replacements[src] =  urlCache.dataUrlForImage(img);
 				ir.resolve();
-			});
+			} else {
+				$(img).load(function() {
+					console.log("finished for " + src);
+					replacements[src] =  urlCache.dataUrlForImage(img);
+					ir.resolve();
+				}).error(function() {
+					console.log("Connectivity errors");
+					// But we aren't doing anything about them now
+					ir.resolve();
+				});
+			}
 			imageReplacements.push(ir);
 		});
 		$.when.apply($, imageReplacements).done(function() {
+			console.log("All done now!");
 			$.each(replacements, function(href, dataURI) {
 				data = data.replace(href, dataURI);
 			});
