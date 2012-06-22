@@ -183,7 +183,7 @@ if(navigator.userAgent.match(/OS 4/)) {
 		var $el = $(selector);
 		var scroller = $el[0].scroller;
 		if(scroller) {
-			scroller.scrollTo(0, offsetY, 200);
+			scroller.scrollTo(0, offsetY, 0);
 		}
 	};
 }
