@@ -47,7 +47,7 @@ window.chrome = function() {
 		$("#main").html(page.toHtml());
 
 		chrome.initContentLinkHandlers("#main");
-		MobileFrontend.references.init($("#main")[0], false, {animation: 'none', onClickReference: onClickReference});
+		mw.mobileFrontend.references.init($("#main")[0], false, {animation: 'none', onClickReference: onClickReference});
 		handleSectionExpansion();
 	}
 
@@ -58,7 +58,7 @@ window.chrome = function() {
 			var sectionHtml = app.curPage.getSectionHtml(sectionID);
 			$contentBlock.append($(sectionHtml)).data('populated', true);
 			chrome.initContentLinkHandlers(selector);
-			MobileFrontend.references.init($contentBlock[0], false, {animation: 'none', onClickReference: onClickReference});
+			mw.mobileFrontend.references.init($contentBlock[0], false, {animation: 'none', onClickReference: onClickReference});
 		} 
 	}
 
@@ -66,7 +66,7 @@ window.chrome = function() {
 		$(".section_heading").click(function() {
 			var sectionID = $(this).data('section-id');
 			chrome.populateSection(sectionID);
-			MobileFrontend.toggle.wm_toggle_section(sectionID);
+			mw.mobileFrontend.toggle.wm_toggle_section(sectionID);
 			chrome.setupScrolling("#content");
 		});
 	}
@@ -173,7 +173,7 @@ window.chrome = function() {
 
 			$(".closeButton").bind('click', showContent);
 			// Initialize Reference reveal with empty content
-			MobileFrontend.references.init($("#content")[0], true, {onClickReference: onClickReference} );
+			mw.mobileFrontend.references.init($("#content")[0], true, {onClickReference: onClickReference} );
 
 			app.setFontSize(preferencesDB.get('fontSize'));
 		});

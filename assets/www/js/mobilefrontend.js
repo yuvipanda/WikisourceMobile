@@ -1,4 +1,4 @@
-MobileFrontend = (function() {
+mw.mobileFrontend = (function() {
 	return {
 		init: function() {
 		},
@@ -6,6 +6,11 @@ MobileFrontend = (function() {
 		},
 		message: function(name) {
 			return mw.message(name).plain();
+		},
+		history: {
+			replaceHash: function( hash ) {
+				// noop; Function used in toggle.js
+			}
 		},
 		utils: jQuery
 	}
