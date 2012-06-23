@@ -50,7 +50,7 @@ window.app = function() {
 		var gotPath = function(cachedPage) {
 			
 			$.get('file://' + cachedPage.file).then(function(data) {
-				var page = Page.fromRawJSON(title, JSON.parse(data), lang);
+				var page = Page.fromRawJSON(title, JSON.parse(data), lang, true);
 				replaceRes();
 				setCurrentPage(page);
 				d.resolve();

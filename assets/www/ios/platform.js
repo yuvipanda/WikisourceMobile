@@ -24,7 +24,7 @@ function getAboutVersionString() {
 app.loadCachedPage = function (url) {
 	return urlCache.getCachedData(url).then(function(data) {
 		var pageData = JSON.parse(data);
-		var page = new Page(pageData.title, pageData.lead, pageData.sections, pageData.lang);
+		var page = new Page(pageData.title, pageData.lead, pageData.sections, pageData.lang, true);
 		app.setCurrentPage(page);
 	}).fail(function(error) {
 		console.log('Error: ' + error);
