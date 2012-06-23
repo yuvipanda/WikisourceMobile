@@ -52,22 +52,29 @@ window.chrome = function() {
 	}
 
 	function populateSection(sectionID) {
+		var d = $.Deferred();
 		var selector = "#content_" + sectionID;
 		var $contentBlock = $(selector);
 		if(!$contentBlock.data('populated')) {
-			var sectionHtml = app.curPage.getSectionHtml(sectionID);
-			$contentBlock.append($(sectionHtml)).data('populated', true);
-			chrome.initContentLinkHandlers(selector);
-			mw.mobileFrontend.references.init($contentBlock[0], false, {animation: 'none', onClickReference: onClickReference});
-		} 
+			app.curPage.getSectionHtml(sectionID).done( function( sectionHtml ) {
+				$contentBlock.append( $( sectionHtml ) ).data( 'populated', true );
+				chrome.initContentLinkHandlers( selector );
+				mw.mobileFrontend.references.init( $contentBlock[0], false, { animation: 'none', onClickReference: onClickReference } );
+				d.resolve();
+			});
+		} else {
+			d.resolve();
+		}
+		return d;
 	}
 
 	function handleSectionExpansion() {
 		$(".section_heading").click(function() {
 			var sectionID = $(this).data('section-id');
-			chrome.populateSection(sectionID);
-			mw.mobileFrontend.toggle.wm_toggle_section(sectionID);
-			chrome.setupScrolling("#content");
+			chrome.populateSection(sectionID).done(function() {
+				mw.mobileFrontend.toggle.wm_toggle_section( sectionID );
+				chrome.setupScrolling( "#content" );
+			});
 		});
 	}
 

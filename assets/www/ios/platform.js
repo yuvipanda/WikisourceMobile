@@ -37,18 +37,23 @@ savedPages.doSave = function(options) {
 	var url = app.curPage.getAPIUrl();
 	var data = JSON.stringify(app.curPage);
 	chrome.showSpinner();
+
+	var populateSectionDeferreds = [];
 	$.each(app.curPage.sections, function(i, section) {
-		chrome.populateSection(section.id);
+		populateSectionDeferreds.push( chrome.populateSection( section.id ) );
 	});
-	urlCache.saveCompleteHtml(url, data, $("#main")).done(function() {
-		if(!options.silent) {
-			chrome.showNotification(mw.message('page-saved', app.curPage.title).plain());
-		}
-		app.track('mobile.app.wikipedia.save-page');
-		chrome.hideSpinner();
-		d.resolve();
-	}).fail(function() {
-		d.reject()
+
+	$.when.apply( $, populateSectionDeferreds ).done( function() {
+		urlCache.saveCompleteHtml( url, data, $( "#main" ) ).done( function() {
+			if( !options.silent ) {
+				chrome.showNotification( mw.message( 'page-saved', app.curPage.title ).plain() );
+			}
+			app.track( 'mobile.app.wikipedia.save-page' );
+			chrome.hideSpinner();
+			d.resolve();
+		}).fail( function() {
+			d.reject()
+		});
 	});
 	return d;
 }

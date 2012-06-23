@@ -235,9 +235,13 @@ savedPages.doSave = function(options) {
 		chrome.hideSpinner();
 		d.reject();
 	}
+
+	var populateSectionDeferreds = [];
 	$.each(app.curPage.sections, function(i, section) {
-		chrome.populateSection(section.id);
+		populateSectionDeferreds.push( chrome.populateSection( section.id ) );
 	});
-	window.plugins.urlCache.getCachedPathForURI(page.getAPIUrl(), gotPath, gotError);
+	$.when.apply( $, populateSectionDeferreds ).done( function() {
+		window.plugins.urlCache.getCachedPathForURI( page.getAPIUrl(), gotPath, gotError );
+	});
 	return d;
 }

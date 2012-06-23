@@ -135,6 +135,7 @@
 	};
 
 	Page.prototype.getSectionHtml = function(id) {
+		var d = $.Deferred();
 		var sectionTemplate = templates.getTemplate('section-template');
 		var foundSection = null;
 		$.each(this.sections, function(i, section) {
@@ -143,7 +144,8 @@
 				return;
 			}
 		});
-		return sectionTemplate.render(foundSection);
+		d.resolve( sectionTemplate.render( foundSection ) );
+		return d;
 	};
 
 	Page.prototype.toHtml = function() {
