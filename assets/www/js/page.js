@@ -102,6 +102,11 @@
 				var newPage = Page.fromRawJSON( that.title, data, that.lang, true );
 				$.each( newPage.sections, function( index, section ) {
 					if( section.id !== 0 || typeof section.references !== 'undefined' ) {
+						// FIXME: *Rare* race condition when a new section is added
+						// bwetween the first request and second request. Will cause the new
+						// section to not show up (if added at the bottom) or replace other 
+						// sections' content (if in the middle). Not a big enough concern for
+						// now, but needs a fix eventually.
 						that.sections[ index ] = section;
 					}
 				});
