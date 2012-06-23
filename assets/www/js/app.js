@@ -191,8 +191,12 @@ window.app = function() {
 			title = "Main_Page"; // FIXME
 		}
 		d = app.loadPage(title, lang, options.fullPage);
-		d.done(function() {
-			console.log("Navigating to " + title);
+		d.done(function(page) {
+			if( !page.fullPage ) {
+				page.requestFullPage().done( function() {
+					alert( 'booyeah!' );
+				});
+			}
 			if(options.hideCurrent) {
 				$("#content").show();
 				// see http://forrst.com/posts/iOS_scrolling_issue_solved-rgX

@@ -76,6 +76,40 @@
 		});	
 	};
 
+	Page.prototype.requestFullPage = function() {
+		var sectionsList = [];
+		var that = this;
+
+		$.each( this.sections, function( index, section ) {
+			sectionsList.push( section.id );
+			var subSectionIDs = section.subSections.map( function( subSection ) {
+				return subSection.id;
+			});
+			sectionsList.push.apply( sectionsList, subSectionIDs );
+		});
+
+		return app.makeAPIRequest({
+			action: 'mobileview',
+			page: that.title,
+			redirects: 'yes',
+			prop: 'sections|text',
+			sections: sectionsList.join( '|' ),
+			sectionprop: 'level|line',
+			noheadings: 'yes'
+		}, that.lang, {
+			dataFilter: function(text) {
+				var data = JSON.parse( text );
+				var newPage = Page.fromRawJSON( that.title, data, that.lang, true );
+				$.each( newPage.sections, function( index, section ) {
+					if( section.id !== 0 || typeof section.references !== 'undefined' ) {
+						that.sections[ index ] = section;
+					}
+				});
+				return that;
+			}
+		});	
+	}
+
 	Page.prototype.requestLangLinks = function() {
 		if(this.langLinks) {
 			var d = $.Deferred();
