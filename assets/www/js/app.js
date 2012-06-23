@@ -32,36 +32,8 @@ window.app = function() {
 		return d;
 	}
 
-	function loadCachedPage (url, title, lang) {
-		chrome.showSpinner();
-		var d = $.Deferred();
-		var replaceRes = function() {
-
-			// images
-			$('#main img').each(function() {
-				var em = $(this);
-				var gotLinkPath = function(linkPath) {
-					em.attr('src', 'file://' + linkPath.file);
-				}
-				var target = this.src.replace('file:', window.PROTOCOL + ':');
-				window.plugins.urlCache.getCachedPathForURI(target, gotLinkPath, gotError);
-			});
-		};
-		var gotPath = function(cachedPage) {
-			
-			$.get('file://' + cachedPage.file).then(function(data) {
-				var page = Page.fromRawJSON(title, JSON.parse(data), lang, true);
-				replaceRes();
-				setCurrentPage(page);
-				d.resolve();
-			});
-		}
-		var gotError = function(error) {
-			console.log('Error: ' + error);
-			chrome.hideSpinner();
-		}
-		window.plugins.urlCache.getCachedPathForURI(url, gotPath, gotError);
-		return d;
+	function loadCachedPage( url, title, lang ) {
+		// Overriden by platform specific implementations;
 	}
 
 	function setCurrentPage(page) {
