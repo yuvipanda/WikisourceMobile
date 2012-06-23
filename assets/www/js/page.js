@@ -1,12 +1,13 @@
 (function() {
-	window.Page = function(title, lead, sections, lang) { 
+	window.Page = function( title, lead, sections, lang, fullPage ) { 
 		this.title = title;
 		this.lead = lead;
 		this.sections = sections;
 		this.lang = lang;
+		this.fullPage = fullPage;
 	};
 
-	Page.fromRawJSON = function(title, rawJSON, lang) {
+	Page.fromRawJSON = function( title, rawJSON, lang, fullPage ) {
 		var lead = {};
 		var sections = [];
 		var lastCollapsibleSection = {subSections: []};
@@ -48,24 +49,29 @@
 			} else {
 				lastCollapsibleSection.subSections.push(section);
 			}
-
 		});
-		return new Page(title, lead, sections, lang);
+		return new Page( title, lead, sections, lang, fullPage );
 	};
 
-	Page.requestFromTitle = function(title, lang) {
+	Page.requestFromTitle = function(title, lang, fullPage) {
+		var sections;
+		if( !fullPage ) {
+			sections = "0|references";
+		} else {
+			sections = "all";
+		}
 		// Make sure changes to this are also propogated to getAPIUrl
 		return app.makeAPIRequest({
 			action: 'mobileview',
 			page: title,
 			redirects: 'yes',
 			prop: 'sections|text',
-			sections: 'all',
+			sections: sections,
 			sectionprop: 'level|line',
 			noheadings: 'yes'
 		}, lang, {
 			dataFilter: function(data) {
-				return Page.fromRawJSON(title, JSON.parse(data), lang);
+				return Page.fromRawJSON( title, JSON.parse( data ), lang, fullPage );
 			}
 		});	
 	};

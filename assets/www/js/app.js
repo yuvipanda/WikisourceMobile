@@ -23,7 +23,7 @@ window.app = function() {
 
 		app.getWikiMetadata().done(function(wikis) {
 			var mainPage = wikis[lang].mainPage;
-			app.navigateTo(mainPage, lang).done(function(data) {
+			app.navigateTo( mainPage, lang, { fullPage: true } ).done( function( data ) {
 				d.resolve(data);
 			}).fail(function(err) {
 				d.reject(err);
@@ -93,11 +93,11 @@ window.app = function() {
 		app.curPage = null;
 	}
 
-	function loadPage(title, language) {
+	function loadPage(title, language, fullPage) {
 		var d = $.Deferred();
 
 		function doRequest() {
-			var req = Page.requestFromTitle(title, language).done(function(page) {
+			var req = Page.requestFromTitle(title, language, fullPage).done(function(page) {
 				if(page === null) {
 					setErrorPage(404);
 				}
@@ -169,7 +169,7 @@ window.app = function() {
 
 	function navigateTo(title, lang, options) {
 		var d = $.Deferred();
-		var options = $.extend({cache: false, updateHistory: true}, options || {});
+		var options = $.extend({cache: false, updateHistory: true, fullPage: false}, options || {});
 		var url = app.urlForTitle(title, lang);
 
 		if(title === "") {
@@ -190,7 +190,7 @@ window.app = function() {
 		if(title === "") {
 			title = "Main_Page"; // FIXME
 		}
-		d = app.loadPage(title, lang);
+		d = app.loadPage(title, lang, options.fullPage);
 		d.done(function() {
 			console.log("Navigating to " + title);
 			if(options.hideCurrent) {
