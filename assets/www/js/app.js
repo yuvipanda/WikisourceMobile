@@ -102,6 +102,11 @@ window.app = function() {
 					setErrorPage(404);
 				}
 				setCurrentPage(page);
+				if( !page.fullPage ) {
+					page.requestFullPage().done( function() {
+						console.log("Full page retreived!");
+					});
+				}
 				d.resolve(page);
 			}).fail(function(xhr, textStatus, errorThrown) {
 				if(textStatus === "abort") {
@@ -192,11 +197,6 @@ window.app = function() {
 		}
 		d = app.loadPage(title, lang, options.fullPage);
 		d.done(function(page) {
-			if( !page.fullPage ) {
-				page.requestFullPage().done( function() {
-					alert( 'booyeah!' );
-				});
-			}
 			if(options.hideCurrent) {
 				$("#content").show();
 				// see http://forrst.com/posts/iOS_scrolling_issue_solved-rgX

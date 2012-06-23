@@ -77,6 +77,11 @@
 	};
 
 	Page.prototype.requestFullPage = function() {
+		if( this.fullPageReq ) {
+			// Only one request should be sent
+			return this.fullPageReq;
+		}
+
 		var sectionsList = [];
 		var that = this;
 
@@ -88,15 +93,15 @@
 			sectionsList.push.apply( sectionsList, subSectionIDs );
 		});
 
-		return app.makeAPIRequest({
+		this.fullPageReq = app.makeAPIRequest({
 			action: 'mobileview',
-			page: that.title,
+			page: this.title,
 			redirects: 'yes',
 			prop: 'sections|text',
 			sections: sectionsList.join( '|' ),
 			sectionprop: 'level|line',
 			noheadings: 'yes'
-		}, that.lang, {
+		}, this.lang, {
 			dataFilter: function(text) {
 				var data = JSON.parse( text );
 				var newPage = Page.fromRawJSON( that.title, data, that.lang, true );
@@ -110,9 +115,13 @@
 						that.sections[ index ] = section;
 					}
 				});
+				that.fullPage = true;
 				return that;
 			}
-		});	
+		}).always( function() {
+			that.fullPageReq = null;;
+		});
+		return this.fullPageReq;
 	}
 
 	Page.prototype.requestLangLinks = function() {
@@ -139,17 +148,29 @@
 		});
 	};
 
-	Page.prototype.getSectionHtml = function(id) {
-		var d = $.Deferred();
-		var sectionTemplate = templates.getTemplate('section-template');
+
+	Page.prototype.getSection = function( id ) {
 		var foundSection = null;
-		$.each(this.sections, function(i, section) {
-			if(section.id == id) {
+		$.each( this.sections, function( i, section ) {
+			if( section.id == id ) {
 				foundSection = section;
 				return;
 			}
 		});
-		d.resolve( sectionTemplate.render( foundSection ) );
+		return foundSection;
+	}
+
+	Page.prototype.getSectionHtml = function( id ) {
+		var d = $.Deferred();
+		var sectionTemplate = templates.getTemplate( 'section-template' );
+		console.log( 'fullpage is ' + this.fullPage );
+		if( this.fullPage === true ) {
+			d.resolve( sectionTemplate.render( this.getSection( id ) ) );
+		} else {
+			this.requestFullPage().done( function( page ) {
+				d.resolve( sectionTemplate.render( page.getSection( id ) ) );
+			});
+		}
 		return d;
 	};
 
