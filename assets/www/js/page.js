@@ -1,13 +1,13 @@
 (function() {
-	window.Page = function( title, lead, sections, lang, fullPage ) { 
+	window.Page = function( title, lead, sections, lang, isCompletePage ) {
 		this.title = title;
 		this.lead = lead;
 		this.sections = sections;
 		this.lang = lang;
-		this.fullPage = fullPage;
+		this.isCompletePage = isCompletePage;
 	};
 
-	Page.fromRawJSON = function( title, rawJSON, lang, fullPage ) {
+	Page.fromRawJSON = function( title, rawJSON, lang, isCompletePage ) {
 		var lead = {};
 		var sections = [];
 		var lastCollapsibleSection = {subSections: []};
@@ -50,12 +50,12 @@
 				lastCollapsibleSection.subSections.push(section);
 			}
 		});
-		return new Page( title, lead, sections, lang, fullPage );
+		return new Page( title, lead, sections, lang, isCompletePage );
 	};
 
-	Page.requestFromTitle = function(title, lang, fullPage) {
+	Page.requestFromTitle = function(title, lang, isCompletePage) {
 		var sections;
-		if( !fullPage ) {
+		if( !isCompletePage ) {
 			sections = "0|references";
 		} else {
 			sections = "all";
@@ -71,15 +71,15 @@
 			noheadings: 'yes'
 		}, lang, {
 			dataFilter: function(data) {
-				return Page.fromRawJSON( title, JSON.parse( data ), lang, fullPage );
+				return Page.fromRawJSON( title, JSON.parse( data ), lang, isCompletePage );
 			}
 		});	
 	};
 
-	Page.prototype.requestFullPage = function() {
-		if( this.fullPageReq ) {
+	Page.prototype.requestCompletePage = function() {
+		if( this.completePageReq ) {
 			// Only one request should be sent
-			return this.fullPageReq;
+			return this.completePageReq;
 		}
 
 		var sectionsList = [];
@@ -93,7 +93,7 @@
 			sectionsList.push.apply( sectionsList, subSectionIDs );
 		});
 
-		this.fullPageReq = app.makeAPIRequest({
+		this.completePageReq = app.makeAPIRequest({
 			action: 'mobileview',
 			page: this.title,
 			redirects: 'yes',
@@ -115,13 +115,13 @@
 						that.sections[ index ] = section;
 					}
 				});
-				that.fullPage = true;
+				that.isCompletePage = true;
 				return that;
 			}
 		}).always( function() {
-			that.fullPageReq = null;;
+			that.completePageReq = null;;
 		});
-		return this.fullPageReq;
+		return this.completePageReq;
 	}
 
 	Page.prototype.requestLangLinks = function() {
@@ -163,11 +163,11 @@
 	Page.prototype.requestSectionHtml = function( id ) {
 		var d = $.Deferred();
 		var sectionTemplate = templates.getTemplate( 'section-template' );
-		console.log( 'fullpage is ' + this.fullPage );
-		if( this.fullPage === true ) {
+		console.log( 'fullpage is ' + this.isCompletePage );
+		if( this.isCompletePage ) {
 			d.resolve( sectionTemplate.render( this.getSection( id ) ) );
 		} else {
-			this.requestFullPage().done( function( page ) {
+			this.requestCompletePage().done( function( page ) {
 				d.resolve( sectionTemplate.render( page.getSection( id ) ) );
 			});
 		}

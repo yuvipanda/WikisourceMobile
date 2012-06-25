@@ -23,7 +23,7 @@ window.app = function() {
 
 		app.getWikiMetadata().done(function(wikis) {
 			var mainPage = wikis[lang].mainPage;
-			app.navigateTo( mainPage, lang, { fullPage: true } ).done( function( data ) {
+			app.navigateTo( mainPage, lang, { isCompletePage: true } ).done( function( data ) {
 				d.resolve(data);
 			}).fail(function(err) {
 				d.reject(err);
@@ -65,17 +65,17 @@ window.app = function() {
 		app.curPage = null;
 	}
 
-	function loadPage(title, language, fullPage) {
+	function loadPage( title, language, isCompletePage ) {
 		var d = $.Deferred();
 
 		function doRequest() {
-			var req = Page.requestFromTitle(title, language, fullPage).done(function(page) {
+			var req = Page.requestFromTitle( title, language, isCompletePage ).done( function( page ) {
 				if(page === null) {
 					setErrorPage(404);
 				}
 				setCurrentPage(page);
-				if( !page.fullPage ) {
-					page.requestFullPage().done( function() {
+				if( !page.isCompletePage ) {
+					page.requestCompletePage().done( function() {
 						console.log("Full page retreived!");
 					});
 				}
@@ -146,7 +146,7 @@ window.app = function() {
 
 	function navigateTo(title, lang, options) {
 		var d = $.Deferred();
-		var options = $.extend({cache: false, updateHistory: true, fullPage: false}, options || {});
+		var options = $.extend( {cache: false, updateHistory: true, isCompletePage: false}, options || {} );
 		var url = app.urlForTitle(title, lang);
 
 		if(title === "") {
@@ -167,7 +167,7 @@ window.app = function() {
 		if(title === "") {
 			title = "Main_Page"; // FIXME
 		}
-		d = app.loadPage(title, lang, options.fullPage);
+		d = app.loadPage( title, lang, options.isCompletePage );
 		d.done(function(page) {
 			if(options.hideCurrent) {
 				$("#content").show();
