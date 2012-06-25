@@ -160,7 +160,7 @@
 		return foundSection;
 	}
 
-	Page.prototype.getSectionHtml = function( id ) {
+	Page.prototype.requestSectionHtml = function( id ) {
 		var d = $.Deferred();
 		var sectionTemplate = templates.getTemplate( 'section-template' );
 		console.log( 'fullpage is ' + this.fullPage );

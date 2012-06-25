@@ -56,7 +56,7 @@ window.chrome = function() {
 		var selector = "#content_" + sectionID;
 		var $contentBlock = $(selector);
 		if(!$contentBlock.data('populated')) {
-			app.curPage.getSectionHtml(sectionID).done( function( sectionHtml ) {
+			app.curPage.requestSectionHtml( sectionID ).done( function( sectionHtml ) {
 				$contentBlock.append( $( sectionHtml ) ).data( 'populated', true );
 				chrome.initContentLinkHandlers( selector );
 				mw.mobileFrontend.references.init( $contentBlock[0], false, { animation: 'none', onClickReference: onClickReference } );
