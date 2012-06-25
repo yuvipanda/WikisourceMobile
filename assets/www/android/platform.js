@@ -262,7 +262,7 @@ app.loadCachedPage = function( url, title, lang ) {
 	};
 	var gotPath = function( cachedPage ) {
 		$.get( 'file://' + cachedPage.file ).then( function( data ) {
-			var page = Page.fromRawJSON( title, JSON.parse( data ), lang, true);
+			var page = new Page( title, JSON.parse( data ), lang, true );
 			replaceRes();
 			app.setCurrentPage( page );
 			d.resolve();
