@@ -17,6 +17,12 @@ input:focus {
 	outline:none;
 }
 
+input {
+	/* Kills stupid overlay hiding spinner on several ICS phones */
+	/* see http://stackoverflow.com/questions/9005550/input-elements-on-android-4-x-can-not-be-styled-when-focused */
+	-webkit-user-modify: read-write-plaintext-only;
+}
+
 img {
 	border:0px;
 }
