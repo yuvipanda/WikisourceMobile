@@ -23,7 +23,7 @@ window.app = function() {
 
 		app.getWikiMetadata().done(function(wikis) {
 			var mainPage = wikis[lang].mainPage;
-			app.navigateTo(mainPage, lang).done(function(data) {
+			app.navigateTo( mainPage, lang, { isCompletePage: true } ).done( function( data ) {
 				d.resolve(data);
 			}).fail(function(err) {
 				d.reject(err);
@@ -32,36 +32,8 @@ window.app = function() {
 		return d;
 	}
 
-	function loadCachedPage (url, title, lang) {
-		chrome.showSpinner();
-		var d = $.Deferred();
-		var replaceRes = function() {
-
-			// images
-			$('#main img').each(function() {
-				var em = $(this);
-				var gotLinkPath = function(linkPath) {
-					em.attr('src', 'file://' + linkPath.file);
-				}
-				var target = this.src.replace('file:', window.PROTOCOL + ':');
-				window.plugins.urlCache.getCachedPathForURI(target, gotLinkPath, gotError);
-			});
-		};
-		var gotPath = function(cachedPage) {
-			
-			$.get('file://' + cachedPage.file).then(function(data) {
-				var page = Page.fromRawJSON(title, JSON.parse(data), lang);
-				replaceRes();
-				setCurrentPage(page);
-				d.resolve();
-			});
-		}
-		var gotError = function(error) {
-			console.log('Error: ' + error);
-			chrome.hideSpinner();
-		}
-		window.plugins.urlCache.getCachedPathForURI(url, gotPath, gotError);
-		return d;
+	function loadCachedPage( url, title, lang ) {
+		// Overriden by platform specific implementations;
 	}
 
 	function setCurrentPage(page) {
@@ -93,15 +65,20 @@ window.app = function() {
 		app.curPage = null;
 	}
 
-	function loadPage(title, language) {
+	function loadPage( title, language, isCompletePage ) {
 		var d = $.Deferred();
 
 		function doRequest() {
-			var req = Page.requestFromTitle(title, language).done(function(page) {
+			var req = Page.requestFromTitle( title, language, isCompletePage ).done( function( page ) {
 				if(page === null) {
 					setErrorPage(404);
 				}
 				setCurrentPage(page);
+				if( !page.isCompletePage ) {
+					page.requestCompletePage().done( function() {
+						console.log("Full page retreived!");
+					});
+				}
 				d.resolve(page);
 			}).fail(function(xhr, textStatus, errorThrown) {
 				if(textStatus === "abort") {
@@ -169,7 +146,7 @@ window.app = function() {
 
 	function navigateTo(title, lang, options) {
 		var d = $.Deferred();
-		var options = $.extend({cache: false, updateHistory: true}, options || {});
+		var options = $.extend( {cache: false, updateHistory: true, isCompletePage: false}, options || {} );
 		var url = app.urlForTitle(title, lang);
 
 		if(title === "") {
@@ -190,9 +167,8 @@ window.app = function() {
 		if(title === "") {
 			title = "Main_Page"; // FIXME
 		}
-		d = app.loadPage(title, lang);
-		d.done(function() {
-			console.log("Navigating to " + title);
+		d = app.loadPage( title, lang, options.isCompletePage );
+		d.done(function(page) {
 			if(options.hideCurrent) {
 				$("#content").show();
 				// see http://forrst.com/posts/iOS_scrolling_issue_solved-rgX

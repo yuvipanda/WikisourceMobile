@@ -24,7 +24,7 @@ function getAboutVersionString() {
 app.loadCachedPage = function (url) {
 	return urlCache.getCachedData(url).then(function(data) {
 		var pageData = JSON.parse(data);
-		var page = new Page(pageData.title, pageData.lead, pageData.sections, pageData.lang);
+		var page = Page.deserializeFrom( pageData );
 		app.setCurrentPage(page);
 	}).fail(function(error) {
 		console.log('Error: ' + error);
@@ -35,20 +35,25 @@ app.loadCachedPage = function (url) {
 savedPages.doSave = function(options) {
 	var d = $.Deferred();
 	var url = app.curPage.getAPIUrl();
-	var data = JSON.stringify(app.curPage);
+	var data = app.curPage.serialize();
 	chrome.showSpinner();
+
+	var populateSectionDeferreds = [];
 	$.each(app.curPage.sections, function(i, section) {
-		chrome.populateSection(section.id);
+		populateSectionDeferreds.push( chrome.populateSection( section.id ) );
 	});
-	urlCache.saveCompleteHtml(url, data, $("#main")).done(function() {
-		if(!options.silent) {
-			chrome.showNotification(mw.message('page-saved', app.curPage.title).plain());
-		}
-		app.track('mobile.app.wikipedia.save-page');
-		chrome.hideSpinner();
-		d.resolve();
-	}).fail(function() {
-		d.reject()
+
+	$.when.apply( $, populateSectionDeferreds ).done( function() {
+		urlCache.saveCompleteHtml( url, data, $( "#main" ) ).done( function() {
+			if( !options.silent ) {
+				chrome.showNotification( mw.message( 'page-saved', app.curPage.title ).plain() );
+			}
+			app.track( 'mobile.app.wikipedia.save-page' );
+			chrome.hideSpinner();
+			d.resolve();
+		}).fail( function() {
+			d.reject()
+		});
 	});
 	return d;
 }
