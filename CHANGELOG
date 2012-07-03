@@ -211,3 +211,22 @@
 ## Android v1.2.1 ##
 
 - Bump version number for Android UserAgent
+
+## iOS v3.3 ##
+
+- Migrate to Phonegap 1.7
+- Saved pages now actually persist on iOS 5.1
+- Fix bug causing images to not migrate when migrating saved pages
+- Fix scrolling issue on iOS 5.x when navigating to pages from NearBy
+
+## Android v1.3beta1 & iOS v3.3beta1 ##
+
+### Common ###
+
+- Loads pages in multiple requests - much faster page load times
+
+### Android ###
+
+- Remove 'Select Text' menu item on Android 3.x+
+- Migrate to PhoneGap 1.7
+- Remove opaque overlay on search bar found in some Android devices
