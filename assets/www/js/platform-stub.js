@@ -67,6 +67,7 @@ if (platform == 'unknown') {
 			'preferences/preferences.js'
 		],
 		ios: [
+            'EmailComposer.js',
 			'ActionSheet.js',
 			'TwitterPlugin.js',
 			'cdv-plugin-fb-connect.js',

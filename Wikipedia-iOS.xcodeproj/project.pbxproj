@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01CDA1BF15A4620400A754B9 /* EmailComposer.js in Sources */ = {isa = PBXBuildFile; fileRef = 01CDA1BB15A4620400A754B9 /* EmailComposer.js */; };
+		01CDA1C015A4620400A754B9 /* EmailComposer.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CDA1BC15A4620400A754B9 /* EmailComposer.m */; };
+		01CDA1C115A4620400A754B9 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 01CDA1BD15A4620400A754B9 /* index.html */; };
+		01CDA1C215A4620400A754B9 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 01CDA1BE15A4620400A754B9 /* readme.md */; };
 		0719935714CDDBA700D60D9C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0719935614CDDBA700D60D9C /* Security.framework */; };
 		0719935914CDDBB400D60D9C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0719935814CDDBB400D60D9C /* MessageUI.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		0719952D14CDEEF500D60D9C /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0719952C14CDEEF500D60D9C /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -65,6 +69,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01CDA1BA15A4620400A754B9 /* EmailComposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailComposer.h; sourceTree = "<group>"; };
+		01CDA1BB15A4620400A754B9 /* EmailComposer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EmailComposer.js; sourceTree = "<group>"; };
+		01CDA1BC15A4620400A754B9 /* EmailComposer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailComposer.m; sourceTree = "<group>"; };
+		01CDA1BD15A4620400A754B9 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		01CDA1BE15A4620400A754B9 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
 		0719935614CDDBA700D60D9C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0719935814CDDBB400D60D9C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		0719952C14CDEEF500D60D9C /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
@@ -183,6 +192,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01CDA1B915A4620400A754B9 /* EmailComposer */ = {
+			isa = PBXGroup;
+			children = (
+				01CDA1BA15A4620400A754B9 /* EmailComposer.h */,
+				01CDA1BB15A4620400A754B9 /* EmailComposer.js */,
+				01CDA1BC15A4620400A754B9 /* EmailComposer.m */,
+				01CDA1BD15A4620400A754B9 /* index.html */,
+				01CDA1BE15A4620400A754B9 /* readme.md */,
+			);
+			path = EmailComposer;
+			sourceTree = "<group>";
+		};
 		6108B3FD1512AF0800779B71 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,6 +421,7 @@
 				61368D531517F94F00C4F0B8 /* facebook-ios-sdk */,
 				6108B3FD1512AF0800779B71 /* Twitter */,
 				D424DED514C0FAC30086FF61 /* ActionSheet */,
+				01CDA1B915A4620400A754B9 /* EmailComposer */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -477,6 +499,8 @@
 				D43186C1152E350C00E19905 /* Default-Landscape@2x~ipad.png in Resources */,
 				D43186C4152E351300E19905 /* Default-Portrait@2x~ipad.png in Resources */,
 				99CC918E156D89E2007F84D5 /* Cordova.plist in Resources */,
+				01CDA1C115A4620400A754B9 /* index.html in Resources */,
+				01CDA1C215A4620400A754B9 /* readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +546,8 @@
 				61368D791517F94F00C4F0B8 /* SBJsonWriter.m in Sources */,
 				61368D7D1517F96F00C4F0B8 /* FacebookConnectPlugin.m in Sources */,
 				99993890156D803E0048DB2B /* CDVDeprecated.m in Sources */,
+				01CDA1BF15A4620400A754B9 /* EmailComposer.js in Sources */,
+				01CDA1C015A4620400A754B9 /* EmailComposer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
