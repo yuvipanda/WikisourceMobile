@@ -90,13 +90,14 @@ function showPageActions(origin) {
 		mw.msg('menu-savePage'),
 		mw.msg('menu-ios-open-safari'),
 		mw.msg('menu-share-fb'),
+        mw.msg('menu-share-mail'),
 		mw.msg('menu-cancel')
 	];
 	// iOS less than 5 does not have Twitter. 
-	var cancelIndex = 3;
+	var cancelIndex = 4;
 	if(navigator.userAgent.match(/OS 5/g)) {
-		pageActions.splice(pageActions.length - 1, 0, mw.msg('menu-share-twitter'));
-		cancelIndex = 4;
+		pageActions.splice(pageActions.length - 2, 0, mw.msg('menu-share-twitter'));
+		cancelIndex = 5;
 	}
 	popupMenu(pageActions, function(value, index) {
 		if (index == 0) {
@@ -105,9 +106,11 @@ function showPageActions(origin) {
 			shareSafari();
 		} else if (index == 2) {
 			shareFB();
-		} else if (index == 3 && cancelIndex != 3) {
+		} else if (index == 3 && cancelIndex != 4) {
 			shareTwitter();
-		}
+        } else if (index == 4) {
+            shareMail();
+        }
 	}, {
 		cancelButtonIndex: cancelIndex,
 		origin: origin
@@ -151,6 +154,21 @@ function shareTwitter() {
 			console.log("Failed :(");
 		}, title + " " + url);
 	});
+}
+
+function shareMail() {
+	var url = app.getCurrentUrl().replace('.m.', '.');
+	var title = app.getCurrentTitle();
+    
+    window.plugins.emailComposer.showEmailComposerWithCB(function(res) {
+                                                           console.log("Mail compose result: " + res);
+                                                         }, 
+                                                         title,  // subject
+                                                         url,    // body
+                                                         null,   // toRecipients
+                                                         null,   // ccRecipients
+                                                         null,   // bccRecipients
+                                                         false); // body is HTML 
 }
 
 function shareSafari() {
