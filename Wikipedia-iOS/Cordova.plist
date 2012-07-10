@@ -21,7 +21,7 @@
 	<key>OpenAllWhitelistURLsInWebView</key>
 	<false/>
 	<key>ExternalHosts</key>
-    <array>
+	<array>
 		<string>ws.geonames.net</string>
 		<string>*.mqcdn.com</string>
 		<string>*.wikipedia.org</string>
@@ -30,7 +30,9 @@
 	</array>
 	<key>Plugins</key>
 	<dict>
-        <key>ActionSheet</key>
+		<key>EmailComposer</key>
+		<string>EmailComposer</string>
+		<key>ActionSheet</key>
 		<string>ActionSheet</string>
 		<key>Compass</key>
 		<string>CDVLocation</string>
@@ -60,7 +62,7 @@
 		<string>CDVSplashScreen</string>
 		<key>Battery</key>
 		<string>CDVBattery</string>
-        <key>com.phonegap.twitter</key>
+		<key>com.phonegap.twitter</key>
 		<string>TwitterPlugin</string>
 		<key>org.apache.cordova.facebook.Connect</key>
 		<string>FacebookConnectPlugin</string>
