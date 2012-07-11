@@ -157,18 +157,20 @@ function shareTwitter() {
 }
 
 function shareMail() {
-	var url = app.getCurrentUrl().replace('.m.', '.');
+	var url = app.getCurrentUrl().replace( '.m.', '.' );
 	var title = app.getCurrentTitle();
-    
-    window.plugins.emailComposer.showEmailComposerWithCB(function(res) {
-                                                           console.log("Mail compose result: " + res);
-                                                         }, 
-                                                         title,  // subject
-                                                         url,    // body
-                                                         null,   // toRecipients
-                                                         null,   // ccRecipients
-                                                         null,   // bccRecipients
-                                                         false); // body is HTML 
+
+	window.plugins.emailComposer.showEmailComposerWithCB(
+		function( res ) {
+			console.log( "Mail compose result: " + res );
+		},
+		title,  // subject
+		url,    // body
+		null,   // toRecipients
+		null,   // ccRecipients
+		null,   // bccRecipients
+		false   // body is HTML
+	);
 }
 
 function shareSafari() {
