@@ -139,7 +139,7 @@ function selectText() {
 function sharePage() {
 	// @fixme if we don't have a page loaded, this menu item should be disabled...
 	var title = app.getCurrentTitle(),
-		url = app.getCurrentUrl().replace(/\.m\.wikipedia/, '.wikipedia');
+		url = app.getCurrentUrl().replace(/\.m\.wikisource/, '.wikisource');
 	window.plugins.share.show(
 		{
 			subject: title,
@@ -223,7 +223,7 @@ savedPages.doSave = function(options) {
 				}
 			);
 		});
-		app.track('mobile.app.wikipedia.save-page');
+		app.track('mobile.app.wikisource.save-page');
 		if(!options.silent) {
 			chrome.showNotification(mw.message('page-saved', app.curPage.title).plain());
 		}

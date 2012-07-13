@@ -48,7 +48,7 @@ savedPages.doSave = function(options) {
 			if( !options.silent ) {
 				chrome.showNotification( mw.message( 'page-saved', app.curPage.title ).plain() );
 			}
-			app.track( 'mobile.app.wikipedia.save-page' );
+			app.track( 'mobile.app.wikisource.save-page' );
 			chrome.hideSpinner();
 			d.resolve();
 		}).fail( function() {

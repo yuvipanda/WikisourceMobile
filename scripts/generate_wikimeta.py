@@ -4,7 +4,7 @@ try:
 except:
     import simplejson as json
 
-SITEMATRIX_URL = "http://en.wikipedia.org/w/api.php?action=sitematrix&format=json"
+SITEMATRIX_URL = "http://en.wikisource.org/w/api.php?action=sitematrix&format=json"
 
 sitematrix = json.loads(urlopen(SITEMATRIX_URL).read())
 
@@ -27,7 +27,7 @@ print "Obtained wiki list"
 mainPageCounter = 0
 for lang in wikis:
     wiki = wikis[lang]
-    url = 'http://' + lang + '.wikipedia.org/wiki/MediaWiki:Mainpage?action=raw'
+    url = 'http://' + lang + '.wikisource.org/wiki/MediaWiki:Mainpage?action=raw'
     # 404 returned if MediaWiki:Mainpage is not overriden
     # At which point we ask specifically for the message
     try:
