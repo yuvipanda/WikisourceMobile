@@ -4,7 +4,7 @@ try:
 except:
     import simplejson as json
 
-SITEMATRIX_URL = "http://en.wikisource.org/w/api.php?action=sitematrix&format=json"
+SITEMATRIX_URL = "http://en.wikipedia.org/w/api.php?action=sitematrix&format=json"
 
 sitematrix = json.loads(urlopen(SITEMATRIX_URL).read())
 
@@ -15,7 +15,7 @@ for k in sitematrix['sitematrix']:
     if k.isdigit():
         lang = sitematrix['sitematrix'][k]
         for site in lang['site']:
-            if site['code'] == 'wiki' and 'closed' not in site:
+            if site['code'] == 'wikisource' and 'closed' not in site:
                 curWiki = {
                         'name': lang['name'],
                         'localName': lang['localname'],
