@@ -46,7 +46,6 @@ window.app = function() {
 		chrome.scrollTo("#content", 0);
 		appHistory.addCurrentPage();
 		chrome.toggleMoveActions();
-		geo.addShowNearbyLinks();
 		$("#page-footer").show();
 		chrome.showContent();
 		chrome.hideSpinner();

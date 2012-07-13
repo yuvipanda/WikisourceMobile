@@ -32,8 +32,6 @@
 	<script type="text/javascript" charset="utf-8" src="js/jquery.localize.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/iscroll-lite.js"></script>
 
-	<script type="text/javascript" charset="utf-8" src="leaflet/leaflet.js"></script>
-
 	<script type="text/javascript" charset="utf-8" src="js/propertiesFileReader.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/preferences.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/l10n-setup.js"></script>
@@ -47,7 +45,6 @@
 	<script type="text/javascript" charset="utf-8" src="js/app.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/app_history.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/search.js"></script>
-	<script type="text/javascript" charset="utf-8" src="js/geo.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/settings.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/langlinks.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/menu.js"></script>
@@ -59,8 +56,6 @@
 
 	<!-- platform-specific setup and overrides -->
   <script type="text/javascript" charset="utf-8" src="js/platform-stub.js"></script>
-
-	<link rel="stylesheet" href="leaflet/leaflet.css" />
 
 	<link rel="stylesheet" href="MobileFrontend/stylesheets/hacks.css" />
 	<link rel="stylesheet" href="MobileFrontend/stylesheets/common.css" />
@@ -303,19 +298,8 @@
 		</div>
 	</div>
 
-	<div id="nearby-overlay">
-		<header>
-			<div class="titlebar">
-				<div class="titlebarItem"><msg key="nearby-title">Nearby</msg></div>
-				<button class="titlebarItem closeButton" title-msg="nearby-close"></button>
-			</div>
-		</header>
-		<div id="map"></div>
-	</div>
-
 	<menu id="appMenu" type="context">
 		<command type="command" id="languageCmd" icon="optionLanguage.png" disabled action="read-in" />
-		<command type="command" id="nearbyCmd" icon="optionNearMe.png" action="near-me" />
 		<command type="command" id="sharePageCmd" action="share-page" icon="optionSharePage.png" />
 		<command type="command" id="savePageCmd" icon="optionAddBookmark.png" action="save-page" />
 		<command type="command" id="savedPagesCmd" icon="optionReadLater.png" action="view-saved-pages" />

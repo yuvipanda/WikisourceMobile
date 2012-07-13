@@ -209,7 +209,6 @@ window.chrome = function() {
 		$('#settings').hide();
 		$('#about-page-overlay').hide();
 		$('#langlinks').hide();
-		$('#nearby-overlay').hide();
 		$('html').removeClass('overlay-open');
 	}
 

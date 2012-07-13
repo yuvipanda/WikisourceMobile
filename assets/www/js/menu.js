@@ -119,20 +119,17 @@ function showPageActions(origin) {
 
 function showListActions(origin) {
 	popupMenu([
-		mw.msg('menu-nearby'),
 		mw.msg('menu-savedPages'),
 		mw.msg('menu-history'),
 		mw.msg('menu-cancel')
 	], function(val, index) {
 		if (index == 0) {
-			geo.showNearbyArticles();
-		} else if (index == 1) {
 			savedPages.showSavedPages();
-		} else if (index == 2) {
+		} else if (index == 1) {
 			appHistory.showHistory();
 		}
 	}, {
-		cancelButtonIndex: 3,
+		cancelButtonIndex: 2,
 		origin: origin
 	});
 }
